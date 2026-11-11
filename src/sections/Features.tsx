@@ -125,7 +125,7 @@ function SectionHead({ compact = false, desc = true }: { compact?: boolean; desc
       <p className="kicker">Feature showcase</p>
       <h2
         className={
-          compact ? 'mt-2 text-[clamp(28px,2.7vw,44px)] font-extrabold leading-[1.08] tracking-[-0.025em] text-navy' : 'h-section mt-3 text-navy'
+          compact ? 'mt-2 whitespace-nowrap text-[clamp(26px,2.25vw,36px)] font-extrabold leading-[1.08] tracking-[-0.025em] text-navy' : 'h-section mt-3 text-navy'
         }
       >
         Built around the work you do <span className="text-acc">every day.</span>
@@ -270,7 +270,8 @@ function Horizontal() {
 
       {/* Heading + skip */}
       <div className="absolute z-[2] flex items-start justify-between gap-6" style={{ left: L.left, right: L.left, top: L.headTop }}>
-        <div className="max-w-[720px]">
+        {/* One-line heading: its height is fixed, so the card below never moves into it. */}
+        <div className="min-w-0">
           <SectionHead compact desc={L.showDesc} />
         </div>
         <SkipButton className="mt-5 flex-none" />
@@ -287,11 +288,11 @@ function Horizontal() {
           {FEATURES.map((f, i) => (
             <article key={f.id} className="feat-panel flex h-full flex-none items-center" style={{ width: `${100 / n}%` }} aria-label={f.kicker}>
               <div className="feat-body flex w-full items-center gap-6 pr-[3%]">
-                <div className="min-w-0 flex-1 py-3">
+                <div className="min-w-0 max-w-[640px] flex-[1.4] py-3">
                   <FeatureCopy f={f} i={i} anim="feat-anim" compact short={cardH < 400} />
                 </div>
                 {L.artW > 0 && (
-                  <div className="feat-anim">
+                  <div className="feat-anim flex flex-1 justify-center">
                     <FeatureArt f={f} width={L.artW} />
                   </div>
                 )}

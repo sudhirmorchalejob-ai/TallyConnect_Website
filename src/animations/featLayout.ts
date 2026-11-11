@@ -30,16 +30,17 @@ export function featLayout(vw: number, vh: number): FeatLayout {
   const cardW = right - left;
   const showDesc = vh >= 700;
   const headTop = 100;
-  const headH = showDesc ? 124 : 76;
-  const cardTop = headTop + headH + 18;
+  // Kicker + one-line heading (+ two-line description): see SectionHead.
+  const headH = showDesc ? 132 : 82;
+  const cardTop = headTop + headH + 16;
   const tabsH = 64;
   const tabsTop = vh - 34 - 12 - tabsH;
   const cardBottom = tabsTop - 16;
   const cardH = cardBottom - cardTop;
 
-  // Phone fits inside the card with a little air above and below.
+  // Phone fits inside the card with clear space above and below.
   const ry = POSES.feat.ry;
-  const s = Math.min(1, Math.max(0.5, (cardH - 28) / (PHONE_H_PER_S * vh)));
+  const s = Math.min(1, Math.max(0.5, (cardH * 0.86) / (PHONE_H_PER_S * vh)));
   const h = PHONE_H_PER_S * s * vh;
   const w = PHONE_W_PER_S * s * vh * Math.cos(ry);
   const cx = left + Math.max(40, cardW * 0.055) + w / 2;

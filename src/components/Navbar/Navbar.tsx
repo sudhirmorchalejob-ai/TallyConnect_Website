@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Logo, SiteIcon } from '../Common/SiteIcon';
 import { scrollToId } from '../../hooks/useSmoothScroll';
+import { openDemo } from '../LiveDemo/openDemo';
 
-/** Small play badge that marks the "Live Demo" link. */
+/** Small play badge that marks the "Demo Video" link. */
 function PlayBadge({ big = false }: { big?: boolean }) {
   return (
     <span
@@ -24,7 +25,7 @@ function PlayBadge({ big = false }: { big?: boolean }) {
 const LINKS = [
   ['features', 'Features'],
   ['more', 'AI Assistant'],
-  ['live-demo', 'Live Demo'],
+  ['live-demo', 'Demo Video'],
   ['how-it-works', 'How it Works'],
   ['benefits', 'Use Cases'],
   ['security', 'Security'],
@@ -49,7 +50,9 @@ export function Navbar() {
   }, [open]);
   const go = (id: string) => {
     setOpen(false);
-    scrollToId(id);
+    // "Demo Video" opens the video popup right away instead of scrolling.
+    if (id === 'live-demo') openDemo();
+    else scrollToId(id);
   };
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">

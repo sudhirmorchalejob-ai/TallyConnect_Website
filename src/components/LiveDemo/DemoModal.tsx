@@ -1,8 +1,8 @@
 // "Choose your demo" popup and the demo video player.
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { DEMOS, resolveDemo, type DemoKind } from '../../config/demoVideos';
+import { DEMOS, resolveDemo, type DemoKind, type DemoSource } from '../../config/demoVideos';
 import { useReducedMotion } from '../../hooks/useMedia';
 import { scrollToId, setScrollLocked } from '../../hooks/useSmoothScroll';
 import { SiteIcon } from '../Common/SiteIcon';
@@ -78,7 +78,6 @@ function ChooseCard({ kind, onPick }: { kind: DemoKind; onPick: (k: DemoKind) =>
 function Player({ kind, onClose }: { kind: DemoKind; onClose: () => void }) {
   const d = DEMOS[kind];
   const src = resolveDemo(d.url);
-  const frame = d.portrait ? 'aspect-[9/16] h-[min(68svh,640px)] max-w-full' : 'aspect-video w-full max-h-[68svh]';
 
   if (src.type === 'none') {
     return (
@@ -119,22 +118,68 @@ function Player({ kind, onClose }: { kind: DemoKind; onClose: () => void }) {
     );
   }
 
+  return <VideoFrame key={kind} title={d.title} src={src} ratio={d.ratio} />;
+}
+
+/** Plays the demo straight away, sized to the video's own shape. */
+function VideoFrame({ title, src, ratio: initial }: { title: string; src: Exclude<DemoSource, { type: 'none' }>; ratio: number }) {
+  const video = useRef<HTMLVideoElement>(null);
+  const [ratio, setRatio] = useState(initial);
+  const [ready, setReady] = useState(false);
+  const embed = src.type === 'iframe' ? src.src : null;
+
+  // Start playback as soon as the player opens. Browsers that refuse autoplay
+  // with sound get it muted instead (the controls can unmute).
+  useEffect(() => {
+    const v = video.current;
+    if (!v || embed) return;
+    v.play().catch(() => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+  }, [embed]);
+
+  // Fits the viewport: never taller than 68% of the screen (or 640px), never wider than the modal.
+  const frame = { aspectRatio: String(ratio), width: `min(100%, calc(min(68svh, 640px) * ${ratio}))` };
+
   return (
     <div className="grid place-items-center rounded-[22px] bg-[#0b1224] p-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,.06)] sm:p-3">
-      <div className={`relative overflow-hidden rounded-[14px] bg-black ${frame}`}>
-        {src.type === 'video' ? (
-          <video src={src.src} className="absolute inset-0 h-full w-full" controls autoPlay playsInline preload="metadata">
-            Your browser can’t play this video.
-          </video>
-        ) : (
+      <div className="relative overflow-hidden rounded-[14px] bg-black" style={frame}>
+        {embed ? (
           <iframe
-            src={src.src}
-            title={d.title}
+            src={embed}
+            title={title}
             className="absolute inset-0 h-full w-full border-0"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
           />
+        ) : (
+          <>
+            <video
+              ref={video}
+              src={src.src}
+              title={title}
+              className="absolute inset-0 h-full w-full"
+              controls
+              autoPlay
+              playsInline
+              preload="auto"
+              onLoadedMetadata={(e) => {
+                const v = e.currentTarget;
+                if (v.videoWidth && v.videoHeight) setRatio(v.videoWidth / v.videoHeight);
+              }}
+              onCanPlay={() => setReady(true)}
+              onPlaying={() => setReady(true)}
+            >
+              Your browser can’t play this video.
+            </video>
+            {!ready && (
+              <span className="pointer-events-none absolute inset-0 grid place-items-center">
+                <span className="h-11 w-11 animate-spin rounded-full border-[3px] border-white/25 border-t-white" aria-label="Loading video" />
+              </span>
+            )}
+          </>
         )}
       </div>
     </div>

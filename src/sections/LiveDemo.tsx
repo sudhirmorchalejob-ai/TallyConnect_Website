@@ -1,7 +1,8 @@
-import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { SiteIcon } from '../components/Common/SiteIcon';
 import { DASHBOARD, DashboardScreen, Laptop } from '../components/HowItWorks/FlowArt';
 import { DemoModal, PlayIcon, type DemoView } from '../components/LiveDemo/DemoModal';
+import { onOpenDemo } from '../components/LiveDemo/openDemo';
 import { CssPhone } from '../components/Smartphone/CssPhone';
 import type { DemoKind } from '../config/demoVideos';
 import { useReveal } from '../hooks/useSmoothScroll';
@@ -61,6 +62,7 @@ export function LiveDemo() {
   useReveal(ref);
   const [view, setView] = useState<DemoView | null>(null);
   const close = useCallback(() => setView(null), []);
+  useEffect(() => onOpenDemo(setView), []);
 
   return (
     <section ref={ref} id="live-demo" className="section overflow-hidden">
@@ -70,7 +72,7 @@ export function LiveDemo() {
       />
       <div className="wrap">
         <div className="mx-auto max-w-[760px] text-center">
-          <p className="kicker reveal">— Live demo —</p>
+          <p className="kicker reveal">— Demo videos —</p>
           <h2 className="h-section reveal mt-3 text-navy">
             Experience Tally Connect <span className="text-acc">in Action</span>
           </h2>

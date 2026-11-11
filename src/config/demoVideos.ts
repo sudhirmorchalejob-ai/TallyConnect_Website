@@ -1,21 +1,24 @@
 // Demo videos for the "Live Demo" section.
 //
-// Paste the Google Drive share links here when they are ready, e.g.
+// Google Drive share links for the two demo videos, e.g.
 //   https://drive.google.com/file/d/<FILE_ID>/view?usp=sharing
-// Make sure each file is shared as "Anyone with the link → Viewer".
-// Leave a value empty to show the "Demo video coming soon" state.
+// Each file must stay shared as "Anyone with the link → Viewer".
+// An empty value shows the "Demo video coming soon" state.
 //
 // They can also be set at build time with VITE_MOBILE_APP_DEMO_URL and
 // VITE_WEB_DASHBOARD_DEMO_URL (see README → "Configuration").
 const env = import.meta.env;
 
-export const MOBILE_APP_DEMO_URL: string = (env.VITE_MOBILE_APP_DEMO_URL as string | undefined) || '';
-export const WEB_DASHBOARD_DEMO_URL: string = (env.VITE_WEB_DASHBOARD_DEMO_URL as string | undefined) || '';
+export const MOBILE_APP_DEMO_URL: string =
+  (env.VITE_MOBILE_APP_DEMO_URL as string | undefined) || 'https://drive.google.com/file/d/1-dxd5U-cxOHRPEP3ALC8NYAnaXXx17jw/view?usp=drivesdk';
+export const WEB_DASHBOARD_DEMO_URL: string =
+  (env.VITE_WEB_DASHBOARD_DEMO_URL as string | undefined) || 'https://drive.google.com/file/d/1-jvbHkt-5vX0iu_smdq98entt-o63vsi/view?usp=drivesdk';
 
 export type DemoKind = 'mobile' | 'web';
 
 export type DemoSource =
   | { type: 'iframe'; src: string }
+  /** Direct video files: played by the site's own player and started automatically. */
   | { type: 'video'; src: string }
   | { type: 'none' };
 
@@ -46,6 +49,9 @@ export function resolveDemo(raw: string): DemoSource {
   if (u.protocol !== 'https:' && u.protocol !== 'http:') return { type: 'none' };
 
   const d = driveId(u);
+  // Google Drive only allows playback inside its own embedded player (it
+  // refuses video requests from other sites), so Drive videos open there and
+  // start with one tap on Drive's play button.
   if (d) return { type: 'iframe', src: `https://drive.google.com/file/d/${d}/preview` };
 
   const host = u.hostname.replace(/^www\.|^m\./, '');
@@ -61,7 +67,8 @@ export function resolveDemo(raw: string): DemoSource {
   return { type: 'none' };
 }
 
-export const DEMOS: Record<DemoKind, { title: string; device: string; url: string; portrait: boolean }> = {
-  mobile: { title: 'Android App Demo', device: 'Android mobile application', url: MOBILE_APP_DEMO_URL, portrait: true },
-  web: { title: 'Web Dashboard Demo', device: 'Web browser dashboard', url: WEB_DASHBOARD_DEMO_URL, portrait: false },
+/** `ratio`: the video's width ÷ height, so the player frame fits it exactly. */
+export const DEMOS: Record<DemoKind, { title: string; device: string; url: string; portrait: boolean; ratio: number }> = {
+  mobile: { title: 'Android App Demo', device: 'Android mobile application', url: MOBILE_APP_DEMO_URL, portrait: true, ratio: 2160 / 3840 },
+  web: { title: 'Web Dashboard Demo', device: 'Web browser dashboard', url: WEB_DASHBOARD_DEMO_URL, portrait: false, ratio: 2026 / 1022 },
 };

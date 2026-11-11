@@ -1,0 +1,40 @@
+.cssphone { position: relative; flex: none; }
+.cssphone-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #4a505e 0%, #23262f 22%, #121419 50%, #2a2e38 78%, #555b6a 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.18),
+    inset 0 0 0 4px #0b0c10,
+    0 1px 0 rgba(255, 255, 255, 0.25),
+    0 40px 70px -30px rgba(14, 27, 51, 0.55),
+    0 18px 30px -18px rgba(14, 27, 51, 0.45);
+}
+.cssphone-screen { position: relative; overflow: hidden; background: #0b0c10; isolation: isolate; transform: translateZ(0); }
+.cssphone-island { position: absolute; left: 50%; transform: translateX(-50%); background: #050608; border-radius: 99px; z-index: 5; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.cssphone-glare {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 26%, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: screen;
+}
+.cssphone-btn { position: absolute; width: 3px; background: linear-gradient(90deg, #6b7180, #2a2e38); border-radius: 2px; }
+.cssphone-btn.b1 { left: -2px; top: 19%; height: 5%; }
+.cssphone-btn.b2 { left: -2px; top: 27%; height: 9%; }
+.cssphone-btn.b3 { right: -2px; top: 24%; height: 13%; }
+.cssphone-shadow { position: absolute; left: 12%; right: 12%; bottom: -26px; height: 30px; border-radius: 50%; background: radial-gradient(closest-side, rgba(14, 27, 51, 0.32), transparent); filter: blur(6px); z-index: -1; }
+.cssphone-loading { width: 100%; height: 100%; background: linear-gradient(180deg, #eef2fb, #e7ebf6); }
+.cssphone.tilt { transform: perspective(1400px) rotateY(-14deg) rotateX(4deg) rotateZ(1deg); transform-style: preserve-3d; }
+.cssphone.float { animation: phone-float 6s ease-in-out infinite; }
+@keyframes phone-float { 50% { translate: 0 -12px; } }
+@media (prefers-reduced-motion: reduce) { .cssphone.float { animation: none; } }
+
+/* 3D phone screen (inside drei <Html transform>) */
+.phone3d-screen { width: 390px; height: 844px; border-radius: 46px; overflow: hidden; position: relative; background: #0b0c10; }
+.phone3d-screen .cssphone-island { width: 118px; height: 33px; top: 11px; }
+.phone3d-glare {
+  position: absolute; inset: -20%; z-index: 6; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.2) 44%, rgba(255, 255, 255, 0.04) 52%, rgba(255, 255, 255, 0) 64%);
+  mix-blend-mode: screen;
+  will-change: transform;
+}

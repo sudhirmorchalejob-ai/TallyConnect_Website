@@ -18,6 +18,7 @@ import { Features } from './sections/Features';
 import { Hero } from './sections/Hero';
 import { HowItWorks } from './sections/HowItWorks';
 import { InteractiveDemo } from './sections/InteractiveDemo';
+import { LiveDemo } from './sections/LiveDemo';
 import { MoreFeatures } from './sections/MoreFeatures';
 import { ScreenGallery } from './sections/ScreenGallery';
 import { Security } from './sections/Security';
@@ -118,6 +119,7 @@ export default function App() {
         <ScreenGallery />
         <Features full={full} />
         <MoreFeatures />
+        <LiveDemo />
         <HowItWorks />
         <Benefits />
         <Security />

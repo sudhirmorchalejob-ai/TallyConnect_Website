@@ -3,11 +3,28 @@ import { useEffect, useState } from 'react';
 import { Logo, SiteIcon } from '../Common/SiteIcon';
 import { scrollToId } from '../../hooks/useSmoothScroll';
 
+/** Small play badge that marks the "Live Demo" link. */
+function PlayBadge({ big = false }: { big?: boolean }) {
+  return (
+    <span
+      className={`grid flex-none place-items-center rounded-full bg-acc text-white shadow-[0_4px_10px_-3px_rgba(140,29,63,.6)] transition-transform duration-200 group-hover:scale-110 ${
+        big ? 'h-6 w-6' : 'h-[18px] w-[18px]'
+      }`}
+      aria-hidden="true"
+    >
+      <svg width={big ? 10 : 8} height={big ? 10 : 8} viewBox="0 0 24 24">
+        <path d="M7 4.5v15a1 1 0 0 0 1.53.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5Z" fill="currentColor" />
+      </svg>
+    </span>
+  );
+}
+
 // Labels from the landing reference. "AI Assistant" opens the section that
 // lists it; "Use Cases" opens "Why businesses use it".
 const LINKS = [
   ['features', 'Features'],
   ['more', 'AI Assistant'],
+  ['live-demo', 'Live Demo'],
   ['how-it-works', 'How it Works'],
   ['benefits', 'Use Cases'],
   ['security', 'Security'],
@@ -42,18 +59,21 @@ export function Navbar() {
           scrolled || open ? 'border border-white bg-white/85 shadow-[0_12px_30px_-18px_rgba(27,45,91,.35)] backdrop-blur-xl' : 'border border-transparent'
         }`}
       >
-        <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex items-center gap-2.5" aria-label="Tally Connect home">
+        <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex flex-none items-center gap-2.5" aria-label="Tally Connect home">
           <img src="/images/tc_app_icon.png" alt="" width={44} height={44} className="h-10 w-10 rounded-[12px] bg-white shadow-[0_4px_12px_-4px_rgba(27,45,91,.25)] sm:h-11 sm:w-11" />
-          <Logo className="h-[24px] sm:h-[30px]" />
+          <Logo className="h-[24px] sm:h-[30px] lg:max-[1199px]:hidden" />
         </a>
-        <ul className="mx-auto hidden items-center gap-1 lg:flex xl:gap-3">
+        <ul className="mx-auto hidden items-center gap-0.5 lg:flex xl:gap-3">
           {LINKS.map(([id, t]) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 onClick={(e) => (e.preventDefault(), go(id))}
-                className="whitespace-nowrap rounded-full px-2.5 py-2 text-[15px] font-semibold text-navy-3 transition-colors hover:text-acc lg:text-[clamp(13.5px,1vw,16px)] xl:px-[1vw]"
+                className={`group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-2 text-[15px] font-semibold text-navy-3 transition-colors hover:text-acc lg:text-[clamp(13.5px,1vw,16px)] xl:px-[1vw] ${
+                  id === 'live-demo' ? 'hover:bg-acc/[0.06]' : ''
+                }`}
               >
+                {id === 'live-demo' && <PlayBadge />}
                 {t}
               </a>
             </li>
@@ -88,9 +108,12 @@ export function Navbar() {
                 key={id}
                 href={`#${id}`}
                 onClick={(e) => (e.preventDefault(), go(id))}
-                className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-[16.5px] font-bold text-ink"
+                className="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-[16.5px] font-bold text-ink transition-colors hover:bg-white/70 hover:text-acc"
               >
-                {t}
+                <span className="flex items-center gap-2.5">
+                  {id === 'live-demo' && <PlayBadge big />}
+                  {t}
+                </span>
                 <SiteIcon n="chevR" size={18} className="text-ink-3" />
               </a>
             ))}

@@ -33,6 +33,12 @@ Copy `.env.example` to `.env` and fill in as needed:
 |---|---|
 | `VITE_ANDROID_APK_URL` | Direct APK download link. If empty, the button opens an email request instead. |
 | `VITE_AGENT_URL` | Windows Sync Agent installer link. If empty, that button is hidden. |
+| `VITE_MOBILE_APP_DEMO_URL` | Android app demo video (Live Demo section). |
+| `VITE_WEB_DASHBOARD_DEMO_URL` | Web dashboard demo video (Live Demo section). |
+
+### Demo videos
+
+The two demo videos can be set either with the variables above or directly in `src/config/demoVideos.ts` (`MOBILE_APP_DEMO_URL`, `WEB_DASHBOARD_DEMO_URL`). Paste a Google Drive share link such as `https://drive.google.com/file/d/<FILE_ID>/view?usp=sharing` and share the file as "Anyone with the link → Viewer"; it is converted to Drive's embeddable player automatically. YouTube, Vimeo and direct `.mp4`/`.webm` links also work. While a value is empty, the player shows "Demo video coming soon".
 
 ## Production build
 

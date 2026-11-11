@@ -58,3 +58,10 @@ export function useReveal(scope: React.RefObject<HTMLElement>, deps: unknown[] =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }
+
+/** Freezes page scrolling (Lenis and native) while a modal is open. */
+export function setScrollLocked(on: boolean) {
+  if (on) lenis?.stop();
+  else lenis?.start();
+  document.documentElement.style.overflow = on ? 'hidden' : '';
+}

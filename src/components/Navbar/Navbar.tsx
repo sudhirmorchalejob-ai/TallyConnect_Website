@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Logo, SiteIcon } from '../Common/SiteIcon';
 import { scrollToId } from '../../hooks/useSmoothScroll';
 import { openDemo } from '../LiveDemo/openDemo';
+import { FreeAccessButton } from './FreeAccessButton';
 
 /** Small play badge that marks the "Live Demo" link. */
 function PlayBadge({ big = false }: { big?: boolean }) {
@@ -74,11 +75,18 @@ export function Navbar() {
             </li>
           ))}
         </ul>
+        {/* Full button from 640px; a compact one on phones. */}
+        <span className="ml-auto hidden sm:block lg:ml-3 xl:ml-5">
+          <FreeAccessButton onClick={() => go('free-access')} />
+        </span>
+        <span className="ml-auto sm:hidden">
+          <FreeAccessButton compact onClick={() => go('free-access')} />
+        </span>
         <button
           type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
-          className="ml-auto grid h-11 w-11 place-items-center rounded-full text-ink lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-full text-ink lg:hidden"
           onClick={() => setOpen(!open)}
         >
           <SiteIcon n={open ? 'close' : 'menu'} />

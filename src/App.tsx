@@ -15,6 +15,7 @@ import { Contact } from './sections/Contact';
 import { DashboardShowcase } from './sections/DashboardShowcase';
 import { Download } from './sections/Download';
 import { FAQ } from './sections/FAQ';
+import { FreeAccess } from './sections/FreeAccess';
 import { Features } from './sections/Features';
 import { Hero } from './sections/Hero';
 import { HowItWorks } from './sections/HowItWorks';
@@ -127,6 +128,7 @@ export default function App() {
         <Benefits />
         <Security />
         <FAQ />
+        <FreeAccess />
         <Download />
         <Contact />
       </main>

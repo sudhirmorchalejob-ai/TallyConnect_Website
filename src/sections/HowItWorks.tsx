@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Waves } from '../components/Common/LandingBackdrop';
 import { SiteIcon } from '../components/Common/SiteIcon';
-import { AgentBox, DashboardScreen, FlowArrow, Fork, Laptop, ServerStack, TallyPrimeScreen } from '../components/HowItWorks/FlowArt';
+import { AgentBox, DASHBOARD, DashboardScreen, FlowArrow, Fork, Laptop, ServerStack, TallyPrimeScreen } from '../components/HowItWorks/FlowArt';
 import { CssPhone } from '../components/Smartphone/CssPhone';
 import { SETUP_STEPS } from '../data/content';
 import type { IconName } from '../demo/icons';
@@ -103,8 +103,8 @@ function Wide() {
           <Label {...NODES.app!} />
         </div>
         <div className="hiw-node grid grid-cols-[1.35fr_1fr] items-center gap-4">
-          <Laptop aspect="1261 / 720" className="mx-[7%]">
-            <DashboardScreen />
+          <Laptop browser aspect={DASHBOARD.aspect} className="mx-[7%]">
+            <DashboardScreen zoomable />
           </Laptop>
           <Label {...NODES.web!} />
         </div>
@@ -155,8 +155,8 @@ function Tall() {
           <Label {...NODES.app!} className="w-full" />
         </div>
         <div className="flex flex-col items-center justify-end gap-4 rounded-[22px] bg-white/45 p-4">
-          <Laptop aspect="1261 / 720" className="w-[82%]">
-            <DashboardScreen />
+          <Laptop browser aspect={DASHBOARD.aspect} className="w-[82%]">
+            <DashboardScreen zoomable />
           </Laptop>
           <Label {...NODES.web!} className="w-full" />
         </div>

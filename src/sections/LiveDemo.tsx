@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState, type ReactNode } from 'react';
 import { SiteIcon } from '../components/Common/SiteIcon';
-import { DashboardScreen, Laptop } from '../components/HowItWorks/FlowArt';
+import { DASHBOARD, DashboardScreen, Laptop } from '../components/HowItWorks/FlowArt';
 import { DemoModal, PlayIcon, type DemoView } from '../components/LiveDemo/DemoModal';
 import { CssPhone } from '../components/Smartphone/CssPhone';
 import type { DemoKind } from '../config/demoVideos';
@@ -109,7 +109,7 @@ export function LiveDemo() {
             cta="Watch Dashboard Demo"
             onWatch={setView}
             art={
-              <Laptop aspect="1261 / 720" className="mb-[-6px] w-[84%] max-w-[520px]">
+              <Laptop browser aspect={DASHBOARD.aspect} className="mb-[-6px] w-[84%] max-w-[520px]">
                 <DashboardScreen />
               </Laptop>
             }

@@ -1,16 +1,35 @@
 // Illustrations for the "How it works" diagram: laptop (TallyPrime / web
 // dashboard), the Sync Agent box, the Tally Connect server, dotted arrows.
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { ICONS } from '../../demo/icons';
+import { setScrollLocked } from '../../hooks/useSmoothScroll';
 
-/** A laptop: dark bezel, screen content, light aluminium base. */
-export function Laptop({ children, aspect = '16 / 10', className = '' }: { children: ReactNode; aspect?: string; className?: string }) {
+/** The real Tally Connect web dashboard screenshot (1917 × 907). */
+export const DASHBOARD = { src: '/images/tc_web_dashboard.webp', w: 1917, h: 907, aspect: '1917 / 907' } as const;
+
+/** A laptop: dark bezel, optional browser bar, screen content, light aluminium base. */
+export function Laptop({
+  children,
+  aspect = '16 / 10',
+  className = '',
+  browser = false,
+}: {
+  children: ReactNode;
+  aspect?: string;
+  className?: string;
+  /** Shows a slim browser bar (window dots + address) above the screen content. */
+  browser?: boolean;
+}) {
   return (
     <div className={`relative ${className}`}>
       <div className="rounded-t-[12px] rounded-b-[4px] bg-gradient-to-b from-[#2a2c38] to-[#14151c] p-[3.5%] pb-[4%] shadow-[0_18px_30px_-18px_rgba(14,27,51,.55)]">
-        <div className="relative overflow-hidden rounded-[3px] bg-white" style={{ aspectRatio: aspect }}>
-          {children}
-          <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.18),rgba(255,255,255,0)_38%)]" />
+        <div className="overflow-hidden rounded-[3px] bg-white">
+          {browser && <BrowserBar />}
+          <div className="relative overflow-hidden bg-white" style={{ aspectRatio: aspect }}>
+            {children}
+            <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.18),rgba(255,255,255,0)_38%)]" />
+          </div>
         </div>
       </div>
       <div className="relative -mx-[9%] h-[9px] rounded-b-[12px] rounded-t-[2px] bg-gradient-to-b from-[#eceaf1] via-[#d6d1de] to-[#b9b2c4] shadow-[0_10px_18px_-8px_rgba(14,27,51,.35)]">
@@ -29,18 +48,106 @@ export function TallyPrimeScreen() {
   );
 }
 
-/** The actual Tally Connect web dashboard (screenshot). */
-export function DashboardScreen() {
+/** Browser window chrome: window dots and the dashboard's public address. */
+export function BrowserBar() {
   return (
+    <div className="flex h-[clamp(12px,1.35vw,20px)] items-center gap-[3%] border-b border-[#e3e6ef] bg-[#f1f3f8] px-[2.5%]" aria-hidden="true">
+      <span className="flex gap-[clamp(2px,0.3vw,4px)]">
+        {['#ff6058', '#ffbd2e', '#28ca42'].map((c) => (
+          <span key={c} className="h-[clamp(4px,0.45vw,7px)] w-[clamp(4px,0.45vw,7px)] rounded-full" style={{ background: c }} />
+        ))}
+      </span>
+      <span className="mx-auto flex h-[64%] w-[46%] items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-full bg-white px-2 text-[clamp(5px,0.6vw,9px)] font-semibold text-[#6b7590]">
+        <svg viewBox="0 0 24 24" className="h-[1.1em] w-[1.1em] flex-none" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+          <rect x="5" y="11" width="14" height="9" rx="2" />
+          <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+        </svg>
+        dashboard.tally-connect.com
+      </span>
+    </div>
+  );
+}
+
+/** The actual Tally Connect web dashboard (screenshot), shown whole: never cropped or stretched. */
+export function DashboardScreen({ zoomable = false }: { zoomable?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const img = (
     <img
-      src="/images/web_dashboard.webp"
-      alt="Tally Connect web dashboard: overview with receivables, payables, bills, monthly income and expense, and outstanding trends"
-      width={1261}
-      height={720}
+      src={DASHBOARD.src}
+      alt="Tally Connect web dashboard: sidebar navigation, sales analytics with graph, receivable, payable, cash and bank totals, and quick actions"
+      width={DASHBOARD.w}
+      height={DASHBOARD.h}
       loading="lazy"
       decoding="async"
-      className="block h-full w-full object-cover object-left-top"
+      className="block h-full w-full object-contain"
     />
+  );
+  if (!zoomable) return img;
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="group/zoom absolute inset-0 block h-full w-full cursor-zoom-in"
+        aria-label="Enlarge the web dashboard screenshot"
+      >
+        {img}
+        <span className="pointer-events-none absolute bottom-[6%] right-[3%] inline-flex items-center gap-1 rounded-full bg-navy/85 px-2.5 py-1 text-[11px] font-bold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover/zoom:opacity-100 group-focus-visible/zoom:opacity-100">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4 4M11 8.5v5M8.5 11h5" />
+          </svg>
+          Enlarge
+        </span>
+      </button>
+      {open && <DashboardLightbox onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+
+/** Full-size view of the dashboard screenshot. */
+function DashboardLightbox({ onClose }: { onClose: () => void }) {
+  const close = useRef<HTMLButtonElement>(null);
+  const done = useRef(onClose);
+  done.current = onClose;
+  useEffect(() => {
+    const back = document.activeElement as HTMLElement | null;
+    setScrollLocked(true);
+    close.current?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && done.current();
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      setScrollLocked(false);
+      back?.focus?.({ preventScroll: true });
+    };
+  }, []);
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Tally Connect web dashboard"
+      data-lenis-prevent
+      className="fixed inset-0 z-[200] grid place-items-center bg-[rgba(14,27,51,.55)] p-3 backdrop-blur-[10px] sm:p-8"
+      onClick={onClose}
+    >
+      <div className="w-full max-w-[1500px] overflow-hidden rounded-[16px] bg-white shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]" onClick={(e) => e.stopPropagation()}>
+        <BrowserBar />
+        <img src={DASHBOARD.src} alt="Tally Connect web dashboard" width={DASHBOARD.w} height={DASHBOARD.h} className="mx-auto block h-auto max-h-[82svh] w-auto max-w-full" />
+      </div>
+      <button
+        ref={close}
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full bg-white text-ink shadow-lg transition-colors hover:text-acc sm:right-6 sm:top-6"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>,
+    document.body,
   );
 }
 

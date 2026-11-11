@@ -7,6 +7,7 @@ import { useReducedMotion } from '../../hooks/useMedia';
 import { scrollToId, setScrollLocked } from '../../hooks/useSmoothScroll';
 import { SiteIcon } from '../Common/SiteIcon';
 import { CssPhone } from '../Smartphone/CssPhone';
+import { DASHBOARD } from '../HowItWorks/FlowArt';
 
 export type DemoView = 'choose' | DemoKind;
 
@@ -50,7 +51,7 @@ function ChooseCard({ kind, onPick }: { kind: DemoKind; onPick: (k: DemoKind) =>
                 <span key={i} className="h-1.5 w-1.5 rounded-full bg-[#c9cede]" />
               ))}
             </div>
-            <img src="/images/web_dashboard.webp" alt="" className="block aspect-[1261/720] w-full object-cover object-left-top" />
+            <img src={DASHBOARD.src} alt="" width={DASHBOARD.w} height={DASHBOARD.h} className="block h-auto w-full" />
           </div>
         )}
         <span className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-[13px] bg-white/90 text-acc shadow-[0_6px_14px_-6px_rgba(27,45,91,.35)]">

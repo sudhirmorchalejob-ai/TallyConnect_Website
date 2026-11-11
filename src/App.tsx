@@ -1,5 +1,6 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { lazy, Suspense, useEffect } from 'react';
+import { featPose } from './animations/featLayout';
 import { director, heroPose, POSES, ROBOT, type Key } from './animations/phoneDirector';
 import { ScrollRobot } from './components/Common/ScrollRobot';
 import { LandingBackdrop } from './components/Common/LandingBackdrop';
@@ -46,6 +47,8 @@ function usePhoneChoreography(enabled: boolean) {
       const first = FEATURES[0]!;
       const lastF = FEATURES[FEATURES.length - 1]!;
       const hero = heroPose(document.documentElement.clientWidth, vh);
+      // The showcase phone is placed inside its feature card (see featLayout).
+      const feat = featPose(document.documentElement.clientWidth, vh);
       const raw: Key[] = [
         { at: 0, pose: hero, shot: { screen: 'home' } },
         { at: aTop - vh * 0.7, pose: hero },
@@ -57,8 +60,8 @@ function usePhoneChoreography(enabled: boolean) {
         { at: demoTop - vh * 0.6, pose: POSES.dash },
         { at: demoTop - vh * 0.05, pose: POSES.aside },
         { at: pin.start - vh * 0.75, pose: POSES.aside },
-        { at: pin.start, pose: POSES.feat, shot: { screen: first.screen, params: first.params } },
-        { at: pin.end, pose: POSES.feat, shot: { screen: lastF.screen, params: lastF.params } },
+        { at: pin.start, pose: feat, shot: { screen: first.screen, params: first.params } },
+        { at: pin.end, pose: feat, shot: { screen: lastF.screen, params: lastF.params } },
         { at: pin.end + vh * 0.75, pose: POSES.exit },
       ];
       // Keep keys strictly increasing whatever the layout.

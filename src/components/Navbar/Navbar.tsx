@@ -4,7 +4,7 @@ import { Logo, SiteIcon } from '../Common/SiteIcon';
 import { scrollToId } from '../../hooks/useSmoothScroll';
 import { openDemo } from '../LiveDemo/openDemo';
 
-/** Small play badge that marks the "Demo Video" link. */
+/** Small play badge that marks the "Live Demo" link. */
 function PlayBadge({ big = false }: { big?: boolean }) {
   return (
     <span
@@ -20,15 +20,10 @@ function PlayBadge({ big = false }: { big?: boolean }) {
   );
 }
 
-// Labels from the landing reference. "AI Assistant" opens the section that
-// lists it; "Use Cases" opens "Why businesses use it".
+// "Live Demo" opens the demo video popup; the others scroll to their section.
 const LINKS = [
   ['features', 'Features'],
-  ['more', 'AI Assistant'],
-  ['live-demo', 'Demo Video'],
-  ['how-it-works', 'How it Works'],
-  ['benefits', 'Use Cases'],
-  ['security', 'Security'],
+  ['live-demo', 'Live Demo'],
   ['faq', 'FAQ'],
   ['contact', 'Contact'],
 ] as const;
@@ -50,7 +45,7 @@ export function Navbar() {
   }, [open]);
   const go = (id: string) => {
     setOpen(false);
-    // "Demo Video" opens the video popup right away instead of scrolling.
+    // "Live Demo" opens the video popup right away instead of scrolling.
     if (id === 'live-demo') openDemo();
     else scrollToId(id);
   };
@@ -63,17 +58,15 @@ export function Navbar() {
         }`}
       >
         <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex flex-none items-center gap-2.5" aria-label="Tally Connect home">
-          <Logo className="h-[28px] sm:h-[34px] lg:max-[1199px]:h-[19px]" />
+          <Logo className="h-[28px] sm:h-[34px]" />
         </a>
-        <ul className="mx-auto hidden items-center gap-0.5 lg:flex xl:gap-3">
+        <ul className="ml-auto hidden items-center gap-2 lg:flex xl:gap-4">
           {LINKS.map(([id, t]) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 onClick={(e) => (e.preventDefault(), go(id))}
-                className={`group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-2 text-[15px] font-semibold text-navy-3 transition-colors hover:text-acc lg:text-[clamp(13.5px,1vw,16px)] xl:px-[1vw] ${
-                  id === 'live-demo' ? 'hover:bg-acc/[0.06]' : ''
-                }`}
+                className={`group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[16px] font-semibold text-navy-3 transition-colors hover:bg-acc/[0.06] hover:text-acc`}
               >
                 {id === 'live-demo' && <PlayBadge />}
                 {t}
@@ -81,16 +74,11 @@ export function Navbar() {
             </li>
           ))}
         </ul>
-        <a href="#download" onClick={(e) => (e.preventDefault(), go('download'))} className="btn btn-accent ml-auto !h-11 !rounded-[14px] !px-5 !text-[15.5px] lg:ml-0 lg:!h-12">
-          <SiteIcon n="download" size={18} />
-          <span className="hidden sm:inline">Get the App</span>
-          <span className="sm:hidden">App</span>
-        </a>
         <button
           type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
-          className="grid h-11 w-11 place-items-center rounded-full text-ink lg:hidden"
+          className="ml-auto grid h-11 w-11 place-items-center rounded-full text-ink lg:hidden"
           onClick={() => setOpen(!open)}
         >
           <SiteIcon n={open ? 'close' : 'menu'} />

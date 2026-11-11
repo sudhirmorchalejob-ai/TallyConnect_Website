@@ -60,8 +60,7 @@ export function Navbar() {
         }`}
       >
         <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex flex-none items-center gap-2.5" aria-label="Tally Connect home">
-          <img src="/images/tc_app_icon.png" alt="" width={44} height={44} className="h-10 w-10 rounded-[12px] bg-white shadow-[0_4px_12px_-4px_rgba(27,45,91,.25)] sm:h-11 sm:w-11" />
-          <Logo className="h-[24px] sm:h-[30px] lg:max-[1199px]:hidden" />
+          <Logo className="h-[28px] sm:h-[34px] lg:max-[1199px]:h-[19px]" />
         </a>
         <ul className="mx-auto hidden items-center gap-0.5 lg:flex xl:gap-3">
           {LINKS.map(([id, t]) => (

@@ -25,9 +25,16 @@ export function useSmoothScroll(enabled: boolean) {
   }, [enabled]);
 }
 
+let autoUntil = 0;
+/** True while a programmatic scroll (nav link, skip button, snap) is still travelling. */
+export const isAutoScrolling = () => performance.now() < autoUntil;
+const markAuto = (duration: number) => (autoUntil = performance.now() + duration * 1000 + 250);
+const doneAuto = () => (autoUntil = 0);
+
 /** Scrolls to a page offset through Lenis when it runs (so the two never fight). */
 export function scrollToY(y: number, duration = 1) {
-  if (lenis) lenis.scrollTo(y, { duration });
+  markAuto(duration);
+  if (lenis) lenis.scrollTo(y, { duration, onComplete: doneAuto });
   else window.scrollTo({ top: y, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
@@ -35,7 +42,8 @@ export function scrollToId(id: string) {
   const el = id === 'top' ? document.body : document.getElementById(id);
   if (!el) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (lenis) lenis.scrollTo(id === 'top' ? 0 : el, { offset: id === 'top' ? 0 : -80, duration: 1.4 });
+  markAuto(1.4);
+  if (lenis) lenis.scrollTo(id === 'top' ? 0 : el, { offset: id === 'top' ? 0 : -80, duration: 1.4, onComplete: doneAuto });
   else if (id === 'top') window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: reduce ? 'auto' : 'smooth' });
   history.replaceState(null, '', id === 'top' ? location.pathname : `#${id}`);

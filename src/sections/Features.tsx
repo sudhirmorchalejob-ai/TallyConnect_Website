@@ -5,7 +5,7 @@ import { director } from '../animations/phoneDirector';
 import { SiteIcon } from '../components/Common/SiteIcon';
 import { CssPhone } from '../components/Smartphone/CssPhone';
 import { FEATURES, type Feature } from '../data/content';
-import { scrollToY, useReveal } from '../hooks/useSmoothScroll';
+import { isAutoScrolling, scrollToY, useReveal } from '../hooks/useSmoothScroll';
 
 function FeatureCopy({ f, i, anim = '', compact = false }: { f: Feature; i: number; anim?: string; compact?: boolean }) {
   return (
@@ -40,6 +40,29 @@ function FeatureCopy({ f, i, anim = '', compact = false }: { f: Feature; i: numb
         {f.benefit}
       </p>
     </div>
+  );
+}
+
+/** Jumps past the whole showcase to "And there is more" (#more). */
+function SkipButton({ className = '' }: { className?: string }) {
+  return (
+    <a
+      href="#more"
+      onClick={(e) => {
+        e.preventDefault();
+        // Target from the real page offset (not Lenis' cached position), 80px clear of the navbar.
+        const el = document.getElementById('more');
+        if (!el) return;
+        scrollToY(el.getBoundingClientRect().top + window.scrollY - 80, 1.4);
+        history.replaceState(null, '', '#more');
+      }}
+      className={`group inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-full border border-white/70 bg-white/80 pl-4 pr-1.5 text-[14.5px] font-bold text-navy shadow-[0_12px_26px_-14px_rgba(27,45,91,.5)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:text-acc hover:shadow-[0_16px_30px_-14px_rgba(140,29,63,.55)] ${className}`}
+    >
+      Skip to And There’s More
+      <span className="grid h-8 w-8 place-items-center rounded-full bg-acc text-white transition-transform duration-300 group-hover:translate-x-0.5">
+        <SiteIcon n="arrow" size={16} stroke={2.4} />
+      </span>
+    </a>
   );
 }
 
@@ -79,9 +102,10 @@ function Horizontal() {
           onUpdate: (self) => {
             const p = self.progress * (n - 1);
             // Settle on the nearest feature once scrolling stops.
+            // Not while a skip / nav jump is passing through the pin.
             window.clearTimeout(snapTimer);
             snapTimer = window.setTimeout(() => {
-              if (!self.isActive) return;
+              if (!self.isActive || isAutoScrolling()) return;
               const q = self.progress * (n - 1);
               const to = Math.round(q);
               if (Math.abs(q - to) < 0.015) return;
@@ -183,6 +207,8 @@ function Horizontal() {
         ))}
         <span className="ml-3 text-[13px] font-bold text-ink-3">{FEATURES[active]!.kicker}</span>
       </nav>
+      {/* Bottom-right from 1280px; below that the dots + label need the room, so it sits under the phone. */}
+      <SkipButton className="absolute bottom-5 left-6 z-[3] xl:left-auto xl:right-6" />
     </section>
   );
 }
@@ -195,6 +221,10 @@ function Stacked() {
       <div className="wrap">
         <div className="reveal max-w-[640px]">
           <SectionHead />
+        </div>
+        {/* Floats at the bottom of the screen while the features are in view. */}
+        <div className="sticky top-[calc(100svh-68px)] z-10 flex h-0 justify-center">
+          <SkipButton />
         </div>
         <div className="mt-14 space-y-20">
           {FEATURES.map((f, i) => (

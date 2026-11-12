@@ -2,6 +2,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { lazy, Suspense, useEffect } from 'react';
 import { featPose } from './animations/featLayout';
 import { director, heroPose, POSES, ROBOT, type Key } from './animations/phoneDirector';
+import { PromoPopup } from './components/Common/PromoPopup';
 import { ScrollRobot } from './components/Common/ScrollRobot';
 import { LandingBackdrop } from './components/Common/LandingBackdrop';
 import { Footer } from './components/Footer/Footer';
@@ -133,6 +134,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <PromoPopup />
     </>
   );
 }

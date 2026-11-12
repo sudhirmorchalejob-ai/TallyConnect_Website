@@ -4,8 +4,11 @@ export const PROMO = {
   enabled: true,
   /** Wait after the page loads before showing it. */
   delayMs: 1000,
-  /** After it is closed (or its button used), wait this many days before showing it again. */
-  snoozeDays: 7,
+  /**
+   * After it is closed (or its button used), wait this many days before showing it again.
+   * 0 = show on every visit / page load (closing only hides it until the next visit).
+   */
+  snoozeDays: 0,
   /** Offer window from the banner (inclusive). The popup only shows inside it. */
   startsOn: '2026-11-01',
   endsOn: '2027-04-30',

@@ -60,11 +60,11 @@ export function Hero({ full }: { full: boolean }) {
         Get Started <SiteIcon n="arrow" size={18} />
       </a>
       <a
-        href={apk || '#download'}
+        href={apk || '#free-access'}
         onClick={(e) => {
           if (!apk) {
             e.preventDefault();
-            scrollToId('download');
+            scrollToId('free-access');
           }
         }}
         className="hero-cta btn !rounded-[12px] border border-[#ece4f0] bg-white text-navy-3 shadow-[0_10px_24px_-14px_rgba(27,45,91,.35)] hover:border-acc/30 lg:!h-[clamp(44px,3.2vw,56px)] lg:!px-[1.5vw] lg:!text-[clamp(14px,1.08vw,18px)]"

@@ -20,7 +20,3 @@ export const SITE = {
   /** Windows Sync Agent installer. Hidden when empty. */
   agentUrl: (env.VITE_AGENT_URL as string | undefined) ?? '',
 };
-
-export const apkRequestMail = `mailto:${SITE.email}?subject=${encodeURIComponent(
-  'Tally Connect Android app',
-)}&body=${encodeURIComponent('Hello, please share the Tally Connect Android app with me.\n\nName:\nCompany:\nPhone:')}`;

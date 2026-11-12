@@ -26,7 +26,6 @@ const LINKS = [
   ['features', 'Features'],
   ['live-demo', 'Live Demo'],
   ['faq', 'FAQ'],
-  ['contact', 'Contact'],
 ] as const;
 
 export function Navbar() {

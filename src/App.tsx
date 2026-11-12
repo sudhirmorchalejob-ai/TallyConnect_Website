@@ -12,9 +12,7 @@ import { useExperience, useReducedMotion } from './hooks/useMedia';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { About } from './sections/About';
 import { Benefits } from './sections/Benefits';
-import { Contact } from './sections/Contact';
 import { DashboardShowcase } from './sections/DashboardShowcase';
-import { Download } from './sections/Download';
 import { FAQ } from './sections/FAQ';
 import { FreeAccess } from './sections/FreeAccess';
 import { Features } from './sections/Features';
@@ -130,8 +128,6 @@ export default function App() {
         <Security />
         <FAQ />
         <FreeAccess />
-        <Download />
-        <Contact />
       </main>
       <Footer />
       <PromoPopup />

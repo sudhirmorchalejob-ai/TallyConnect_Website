@@ -3,8 +3,8 @@ import { scrollToId } from '../../hooks/useSmoothScroll';
 import { Logo, SiteIcon } from '../Common/SiteIcon';
 
 const COLS: [string, [string, string][]][] = [
-  ['Product', [['features', 'Features'], ['demo', 'Live demo'], ['screens', 'Screens'], ['download', 'Get the app']]],
-  ['Learn', [['how-it-works', 'How it works'], ['security', 'Security & access'], ['faq', 'FAQ'], ['contact', 'Contact']]],
+  ['Product', [['features', 'Features'], ['demo', 'Live demo'], ['screens', 'Screens'], ['free-access', 'Free access']]],
+  ['Learn', [['how-it-works', 'How it works'], ['security', 'Security & access'], ['faq', 'FAQ'], ['free-access', 'Contact']]],
 ];
 
 export function Footer() {

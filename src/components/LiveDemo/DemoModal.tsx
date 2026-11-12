@@ -108,7 +108,7 @@ function Player({ kind, onClose }: { kind: DemoKind; onClose: () => void }) {
             className={`btn ${kind === 'mobile' ? 'btn-glass' : 'btn-accent'} !h-11 !rounded-[14px] !text-[15px]`}
             onClick={() => {
               onClose();
-              setTimeout(() => scrollToId('contact'), 60);
+              setTimeout(() => scrollToId('free-access'), 60);
             }}
           >
             <SiteIcon n="chat" size={17} /> Request a live demo

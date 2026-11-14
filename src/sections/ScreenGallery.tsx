@@ -28,7 +28,7 @@ const SHOTS: { t: string; screen: ScreenKey; params?: Record<string, string>; lo
 ];
 
 /** Auto-scroll speed, CSS px per second (right → left). */
-const SPEED = 45;
+const SPEED = 95;
 /** Gap between phones (matches gap-6). */
 const GAP = 24;
 /** One phone plus its gap — how far an arrow click moves the row. */
@@ -49,7 +49,10 @@ function Shot({ s, copy, onHover }: { s: (typeof SHOTS)[number]; copy?: boolean;
       >
         <CssPhone width={230} app={{ screen: s.screen, params: s.params, look: s.look }} label={copy ? undefined : `${s.t} screen`} />
       </div>
-      <figcaption className="mt-5 text-center text-[14.5px] font-bold text-ink-2">{s.t}</figcaption>
+      {/* Screen name as a small card under its phone (always one line, never wider than the phone). */}
+      <figcaption className="mx-auto mt-6 w-max max-w-[230px] whitespace-nowrap rounded-[12px] border border-[#f1dbe6] bg-gradient-to-b from-white to-[#fff6fa] px-4 py-2 text-center text-[16px] font-bold leading-snug tracking-[-0.01em] text-navy-3 shadow-[0_10px_22px_-14px_rgba(110,21,49,.45),0_1px_2px_rgba(27,45,91,.06)] sm:px-5 sm:py-2.5 sm:text-[17px] lg:text-[18px]">
+        {s.t}
+      </figcaption>
     </figure>
   );
 }

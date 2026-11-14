@@ -1,7 +1,7 @@
 // 6-Month Free Access contact page (target of the navbar CTA and the promo
 // popup), laid out after the approved reference. Visitors reach the team by
-// email, WhatsApp or phone; there is no sign-up flow here. The offer runs for
-// a fixed period, not per visitor.
+// email, WhatsApp or phone; there is no sign-up flow here. The offer is
+// 6 months of free access.
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Waves } from '../components/Common/LandingBackdrop';
 import { SiteIcon } from '../components/Common/SiteIcon';
@@ -10,12 +10,10 @@ import { SITE } from '../config/site';
 import { ICONS } from '../demo/icons';
 import { useReveal } from '../hooks/useSmoothScroll';
 
-const OFFER = { from: '1 November 2026', to: '30 April 2027' };
-
 const EMAIL_SUBJECT = 'Tally Connect – 6-Month Free Access Enquiry';
 const EMAIL_BODY = `Hello Tally Connect team,
 
-I am interested in the Tally Connect 6-Month Free Access offer (${OFFER.from} to ${OFFER.to}). Please share the details and help me activate the free access.
+I am interested in the Tally Connect 6-Month Free Access offer. Please share the details and help me activate the free access.
 
 Name:
 Company:
@@ -35,7 +33,7 @@ const LINKS = {
 const BENEFITS = [
   { t: 'Talk to Our Team', d: 'Discuss your requirements and get personalized assistance.', icon: 'handshake' },
   { t: 'Quick Setup', d: 'We help you with the implementation and access setup.', icon: 'gear' },
-  { t: 'Use for 6 Months', d: `Enjoy Tally Connect free from ${OFFER.from} to ${OFFER.to}.`, icon: 'calendarCheck' },
+  { t: 'Use for 6 Months', d: 'Enjoy Tally Connect free for 6 months.', icon: 'calendarCheck' },
 ] as const;
 
 /* ---------- icons ---------- */
@@ -94,7 +92,7 @@ function Sparks({ className = '' }: { className?: string }) {
 
 /* ---------- pieces ---------- */
 
-/** Calendar-style card with the fixed offer period. */
+/** Calendar-style card with the offer length (6 months). */
 function ValidityCard({ className = '' }: { className?: string }) {
   return (
     <div className={`relative pt-5 ${className}`}>
@@ -108,18 +106,14 @@ function ValidityCard({ className = '' }: { className?: string }) {
       ))}
       <Sparks className="absolute -right-3 -top-3 w-12" />
       <div className="overflow-hidden rounded-[26px] bg-white shadow-[0_28px_50px_-24px_rgba(110,21,49,.6),0_0_0_6px_rgba(255,255,255,.75)]">
-        <p className="bg-gradient-to-b from-[#a8264f] to-[#7a1534] px-4 pb-4 pt-9 text-center text-[clamp(18px,1.6vw,26px)] font-extrabold text-white">Offer Validity</p>
+        <p className="bg-gradient-to-b from-[#a8264f] to-[#7a1534] px-4 pb-4 pt-9 text-center text-[clamp(18px,1.6vw,26px)] font-extrabold text-white">Free Access</p>
         <div className="px-5 pb-6 pt-5 text-center">
-          <p className="flex items-center justify-center gap-2.5 text-[clamp(16px,1.55vw,24px)] font-extrabold leading-tight text-[#6e1531]">
-            <SiteIcon n="calendar" size={26} className="text-acc" />
-            {OFFER.from}
+          <p className="flex items-center justify-center gap-2.5 text-[clamp(15px,1.3vw,20px)] font-extrabold leading-tight text-[#6e1531]">
+            <SiteIcon n="calendar" size={24} className="text-acc" />
+            Use it free for
           </p>
-          <p className="my-2 flex items-center gap-3 text-[clamp(16px,1.4vw,22px)] font-extrabold text-[#6e1531]">
-            <span className="h-px flex-1 bg-acc/15" />
-            to
-            <span className="h-px flex-1 bg-acc/15" />
-          </p>
-          <p className="text-[clamp(16px,1.55vw,24px)] font-extrabold leading-tight text-[#6e1531]">{OFFER.to}</p>
+          <p className="mt-1 text-[clamp(64px,6vw,96px)] font-black leading-none text-acc">6</p>
+          <p className="text-[clamp(22px,2vw,32px)] font-extrabold leading-tight text-[#6e1531]">Months</p>
           <p className="mx-auto mt-5 w-fit rounded-full bg-gradient-to-b from-[#ffd95c] to-[#f6bb22] px-6 py-2 text-[clamp(14px,1.15vw,19px)] font-extrabold text-navy shadow-[0_10px_18px_-10px_rgba(196,127,18,.9)]">
             (6 Months Only)
           </p>

@@ -116,6 +116,215 @@ export const MORE: { ic: IconName; t: string; d: string }[] = [
   { ic: 'eye', t: 'Demo Company', d: 'Every account can explore sample data, kept strictly apart from real data.' },
 ];
 
+/** Headline selling points, shown in the Key Features section and the hero ribbon. */
+export const LANGUAGE_NAMES: { n: string; en: string }[] = [
+  { n: 'English', en: 'English' },
+  { n: 'हिन्दी', en: 'Hindi' },
+  { n: 'ગુજરાતી', en: 'Gujarati' },
+  { n: 'मराठी', en: 'Marathi' },
+];
+export const KEY_REPORTS = ['Balance Sheet', 'Cash Flow Statement', 'Trial Balance', 'Profit & Loss Statement', 'Day Book', 'Outstanding Reports'];
+export type KeyFeature = { id: string; ic: IconName; t: string; short: string; points: string[] };
+export const KEY_FEATURES: KeyFeature[] = [
+  {
+    id: 'access',
+    ic: 'phone',
+    t: 'Access All Tally Products on Your Phone',
+    short: 'Tally on your phone',
+    points: ['Access your Tally products and business data directly from your smartphone.', 'Manage business operations from anywhere — office, shop, site or on the road.'],
+  },
+  {
+    id: 'create',
+    ic: 'edit',
+    t: 'Create & Manage Anything in Tally',
+    short: 'Create & manage entries',
+    points: ['Create, edit and manage Tally entries and vouchers.', 'Work from your mobile phone or a web browser.'],
+  },
+  {
+    id: 'reports',
+    ic: 'pie',
+    t: 'Complete Financial Reports',
+    short: 'Complete financial reports',
+    points: ['Every key statement, with charts, ready to share as a PDF.'],
+  },
+  {
+    id: 'languages',
+    ic: 'globe',
+    t: 'Multiple Language Support',
+    short: 'Multiple languages',
+    points: ['Use the whole app in your own language and switch any time.'],
+  },
+  {
+    id: 'attendance',
+    ic: 'clock',
+    t: 'Attendance & Leave Management',
+    short: 'Attendance & leave',
+    points: ['Employee attendance tracking with check-in and check-out.', 'Leave applications, approvals and monitoring.'],
+  },
+  {
+    id: 'team',
+    ic: 'team',
+    t: 'Sales Team Management',
+    short: 'Sales team management',
+    points: ['Manage your sales team’s activities and access.', 'Monitor team performance and sales operations.'],
+  },
+  {
+    id: 'orders',
+    ic: 'cart',
+    t: 'Sales & Purchase Order Management',
+    short: 'Sales & purchase orders',
+    points: ['Create and manage sales orders.', 'Manage purchase orders.', 'Track every order: pending, partial or closed.'],
+  },
+];
+
+/**
+ * The complete feature list, as supplied by the Tally Connect team.
+ * A point marked `soon` is still being built and is labelled that way on the page.
+ */
+export type FeatureGroup = { ic: IconName; t: string; key?: boolean; points: (string | { t: string; soon: true })[] };
+export const ALL_FEATURES: FeatureGroup[] = [
+  {
+    ic: 'home',
+    t: 'Home Dashboard',
+    points: [
+      'Dashboard cards and customizable layout',
+      'Sales Performance summary',
+      'Order Management summary',
+      'Outstanding summary',
+      'Sales and financial overview',
+      'Notifications and sync status',
+      'AI Assistant access',
+    ],
+  },
+  {
+    ic: 'rupeeC',
+    t: 'Outstanding',
+    points: [
+      'Receivables and Payables',
+      'Bill-wise outstanding',
+      'Ageing analysis',
+      'Bill details and payment history',
+      'Email payment reminders',
+      'Reminder history and templates',
+    ],
+  },
+  {
+    ic: 'person',
+    t: 'Parties / Ledgers',
+    points: [
+      'Ledger list and details',
+      'Create and edit parties',
+      'Ledger balances and transactions',
+      'Search and location-based party information',
+      'Bulk sharing and PDF export',
+    ],
+  },
+  {
+    ic: 'box',
+    t: 'Items & Inventory',
+    points: ['Stock item list and details', 'Stock summary and godowns', 'Inventory movements', 'Create and edit items', 'Physical stock counting'],
+  },
+  {
+    ic: 'receipt',
+    t: 'Vouchers & Entries',
+    key: true,
+    points: [
+      'Sales, Purchase, Receipt, Payment, Journal and Contra',
+      'Create entries',
+      'Voucher details and history',
+      'Voucher sync status and retry',
+      'Team member entry approvals',
+    ],
+  },
+  {
+    ic: 'cart',
+    t: 'Order Management',
+    key: true,
+    points: [
+      'Sales Orders and Purchase Orders',
+      'Create orders',
+      'Order details and item tracking',
+      { t: 'Convert orders into invoices', soon: true },
+      'Pending, Partial and Closed status',
+      'Order analytics',
+    ],
+  },
+  {
+    ic: 'chart',
+    t: 'Sales Analytics',
+    points: ['Sales dashboard', 'Customer-wise sales', 'Top customers', 'Top-selling products'],
+  },
+  {
+    ic: 'trophy',
+    t: 'Sales Performance',
+    points: ['Salesperson-wise performance', 'Order and invoice conversion tracking', 'Salesperson rankings', 'Performance charts and reports'],
+  },
+  {
+    ic: 'pie',
+    t: 'Financial Reports',
+    key: true,
+    points: ['Profit & Loss', 'Balance Sheet', 'Trial Balance', 'Day Book', 'Outstanding Reports', 'Expenses', 'Cash Flow Forecast', 'Official Tally Reports'],
+  },
+  {
+    ic: 'file',
+    t: 'E-Invoice',
+    points: ['E-invoice management and details'],
+  },
+  {
+    ic: 'team',
+    t: 'Sales Team',
+    key: true,
+    points: [
+      'Add and manage team members',
+      'Configure ledger, item and voucher access',
+      'Group-wise and location-based permissions',
+      'Feature and action permissions',
+      'Entry approvals and access requests',
+      'Attendance and employee management',
+    ],
+  },
+  {
+    ic: 'clock',
+    t: 'Attendance & Leave',
+    key: true,
+    points: ['Employee check-in/check-out', 'Attendance history', 'Team attendance monitoring', 'Attendance rules', 'Leave applications and approvals'],
+  },
+  {
+    ic: 'activity',
+    t: 'Reports & Activity',
+    points: ['Reports dashboard', 'Activity tracking', 'Report details and sharing'],
+  },
+  {
+    ic: 'spark',
+    t: 'AI Assistant & Search',
+    key: true,
+    points: ['AI Assistant', 'Global search', 'Voice search'],
+  },
+  {
+    ic: 'share',
+    t: 'Sharing & Export',
+    points: ['PDF generation', 'WhatsApp sharing', 'Bulk document sharing', 'Voucher and bill exports'],
+  },
+  {
+    ic: 'bell',
+    t: 'Notifications & Reminders',
+    points: ['Mobile notifications', 'Device reminders and alarms', 'Bill payment reminders', 'Out-of-stock alerts'],
+  },
+  {
+    ic: 'gear',
+    t: 'Account & Settings',
+    points: [
+      'Login, OTP and password recovery',
+      'Multi-company selection',
+      'Profile and settings',
+      'Themes, wallpapers and language',
+      'Licence and subscription details',
+      'Terms & Conditions',
+      'Feedback and support',
+    ],
+  },
+];
+
 export const BENEFITS: { ic: IconName; t: string; d: string }[] = [
   { ic: 'phone', t: 'Your business in your pocket', d: 'Sales, dues, stock and reports from TallyPrime, on your Android phone.' },
   { ic: 'send', t: 'Entries from anywhere', d: 'Make vouchers on the move — the Agent posts them into TallyPrime.' },

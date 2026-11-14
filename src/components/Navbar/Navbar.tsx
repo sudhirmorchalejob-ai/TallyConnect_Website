@@ -23,7 +23,7 @@ function PlayBadge({ big = false }: { big?: boolean }) {
 
 // "Live Demo" opens the demo video popup; the others scroll to their section.
 const LINKS = [
-  ['features', 'Features'],
+  ['highlights', 'Key Features'],
   ['live-demo', 'Live Demo'],
   ['faq', 'FAQ'],
 ] as const;

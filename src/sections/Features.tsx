@@ -192,6 +192,10 @@ function Horizontal() {
               scrollToY(self.start + ((self.end - self.start) * to) / (n - 1), 0.7);
             }, 160);
             const idx = Math.min(n - 1, Math.round(p));
+            setActive(idx);
+            // The scrub keeps updating briefly after the pin is left; only steer
+            // the 3D phone while pinned, so About (next) gets its own screen.
+            if (!self.isActive) return;
             const frac = p - Math.floor(p);
             const k = Math.sin(frac * Math.PI);
             director.sway.ry = -k * 0.42;
@@ -199,7 +203,6 @@ function Horizontal() {
             director.sway.s = -k * 0.06;
             const f = FEATURES[idx]!;
             director.setOverride({ screen: f.screen, params: f.params });
-            setActive(idx);
           },
           onToggle: (self) => {
             if (!self.isActive) {

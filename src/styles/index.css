@@ -105,3 +105,10 @@ body {
   mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
 }
 .landing-waves { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 54%; }
+
+/* Key features ribbon under the hero: an endless horizontal scroll. */
+.ribbon-mask { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.ribbon-track { animation: ribbon 38s linear infinite; }
+.ribbon-mask:hover .ribbon-track { animation-play-state: paused; }
+@keyframes ribbon { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ribbon-track { animation: none; } .ribbon-mask { overflow-x: auto; } }

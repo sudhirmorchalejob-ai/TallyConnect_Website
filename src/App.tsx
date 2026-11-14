@@ -19,6 +19,8 @@ import { Features } from './sections/Features';
 import { Hero } from './sections/Hero';
 import { HowItWorks } from './sections/HowItWorks';
 import { InteractiveDemo } from './sections/InteractiveDemo';
+import { KeyFeatures } from './sections/KeyFeatures';
+import { AllFeatures } from './sections/AllFeatures';
 import { LiveDemo } from './sections/LiveDemo';
 import { MoreFeatures } from './sections/MoreFeatures';
 import { ScreenGallery } from './sections/ScreenGallery';
@@ -38,27 +40,35 @@ function usePhoneChoreography(enabled: boolean) {
       const about = document.getElementById('about');
       const stage = document.getElementById('dash-stage');
       const pin = ScrollTrigger.getById('features-pin');
-      const demo = document.getElementById('demo');
-      if (!about || !stage || !pin || !demo) return;
-      const demoTop = docTop(demo);
+      const screens = document.getElementById('screens');
+      if (!about || !stage || !pin || !screens) return;
+      const scTop = docTop(screens);
       const aTop = docTop(about);
       const aH = about.offsetHeight;
       const sTop = docTop(stage);
       const first = FEATURES[0]!;
       const lastF = FEATURES[FEATURES.length - 1]!;
-      const hero = heroPose(document.documentElement.clientWidth, vh);
+      // The hero phone fits the band between the navbar and the feature strip.
+      const band = document.getElementById('hero-stage');
+      const hero = heroPose(
+        document.documentElement.clientWidth,
+        vh,
+        band ? { top: docTop(band), bottom: docTop(band) + band.offsetHeight } : undefined,
+      );
       // The showcase phone is placed inside its feature card (see featLayout).
       const feat = featPose(document.documentElement.clientWidth, vh);
+      // Page order: Hero → About → Dashboard → Screens → Live demo → Key
+      // Features → Feature Showcase → … The screens strip, the live demo and
+      // Key Features have no 3D phone: it glides out to the left for them,
+      // then back for the showcase.
       const raw: Key[] = [
         { at: 0, pose: hero, shot: { screen: 'home' } },
         { at: aTop - vh * 0.7, pose: hero },
         { at: aTop + aH / 2 - vh / 2, pose: POSES.about, shot: { screen: 'activity' } },
         { at: aTop + aH - vh * 0.75, pose: POSES.about },
         { at: sTop + stage.offsetHeight / 2 - vh / 2, pose: POSES.dash, shot: { screen: 'home' } },
-        // The live demo and the screens strip have their own phones: the 3D
-        // phone glides out to the left for them, then back for the showcase.
-        { at: demoTop - vh * 0.6, pose: POSES.dash },
-        { at: demoTop - vh * 0.05, pose: POSES.aside },
+        { at: scTop - vh * 0.6, pose: POSES.dash },
+        { at: scTop - vh * 0.05, pose: POSES.aside },
         { at: pin.start - vh * 0.75, pose: POSES.aside },
         { at: pin.start, pose: feat, shot: { screen: first.screen, params: first.params } },
         { at: pin.end, pose: feat, shot: { screen: lastF.screen, params: lastF.params } },
@@ -72,8 +82,8 @@ function usePhoneChoreography(enabled: boolean) {
         return { ...k, at };
       });
       director.setKeys(keys);
-      // The AI robot rides along with the phone into About, then bows out
-      // as the Dashboard section comes in.
+      // The AI robot rides with the phone from the hero into About, then
+      // bows out as the Dashboard section comes in.
       director.setRobotKeys([
         { at: 0, pose: ROBOT.hero },
         { at: keys[1]!.at, pose: ROBOT.hero },
@@ -118,10 +128,12 @@ export default function App() {
         <Hero full={full} />
         <About full={full} />
         <DashboardShowcase full={full} />
-        <InteractiveDemo />
         <ScreenGallery />
+        <InteractiveDemo />
+        <KeyFeatures />
         <Features full={full} />
         <MoreFeatures />
+        <AllFeatures />
         <LiveDemo />
         <HowItWorks />
         <Benefits />

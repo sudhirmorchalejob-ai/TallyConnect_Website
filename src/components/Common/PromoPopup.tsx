@@ -25,14 +25,10 @@ function writeDismissed() {
   }
 }
 
-/** Inside the offer window and not dismissed within the snooze period. */
+/** Enabled and not dismissed within the snooze period. */
 function shouldShow(): boolean {
   if (!PROMO.enabled) return false;
-  const now = Date.now();
-  const start = new Date(`${PROMO.startsOn}T00:00:00`).getTime();
-  const end = new Date(`${PROMO.endsOn}T23:59:59`).getTime();
-  if (now < start || now > end) return false;
-  return now - readDismissed() > PROMO.snoozeDays * DAY;
+  return Date.now() - readDismissed() > PROMO.snoozeDays * DAY;
 }
 
 const pct = (r: { left: number; top: number; width: number; height: number }) => ({
@@ -136,7 +132,7 @@ export function PromoPopup() {
               Limited-time offer: get Tally Connect free for 6 months
             </h2>
             <p id="promo-desc" className="sr-only">
-              Phone access on your mobile phone and web access in your browser. Valid from 1 November 2026 to 30 April 2027.
+              Phone access on your mobile phone and web access in your browser, free for 6 months.
             </p>
             <div className="relative" style={{ aspectRatio: `${PROMO_BANNER.width} / ${PROMO_BANNER.height}` }}>
               <img
@@ -145,7 +141,7 @@ export function PromoPopup() {
                 sizes="(max-width: 1100px) 100vw, 1080px"
                 width={PROMO_BANNER.width}
                 height={PROMO_BANNER.height}
-                alt="Tally Connect limited-time offer: Get Tally Connect free for 6 months. Phone access and web access. Valid from 1 November 2026 to 30 April 2027."
+                alt="Tally Connect limited-time offer: Get Tally Connect free for 6 months. Phone access and web access."
                 decoding="async"
                 className="block h-full w-full select-none drop-shadow-[0_30px_60px_rgba(14,27,51,.45)]"
                 draggable={false}

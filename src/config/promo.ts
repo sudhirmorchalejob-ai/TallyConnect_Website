@@ -9,9 +9,6 @@ export const PROMO = {
    * 0 = show on every visit / page load (closing only hides it until the next visit).
    */
   snoozeDays: 0,
-  /** Offer window from the banner (inclusive). The popup only shows inside it. */
-  startsOn: '2026-11-01',
-  endsOn: '2027-04-30',
   /** localStorage key that remembers when it was last dismissed. */
   storageKey: 'tc-promo-free-access-dismissed-at',
 };

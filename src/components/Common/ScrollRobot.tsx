@@ -25,7 +25,8 @@ export function ScrollRobot() {
       // Pinned to the phone: right edge just over the phone's left edge,
       // feet level with the lower part of the phone. Follows it every frame.
       const vw = document.documentElement.clientWidth / 100;
-      const wPx = cur.w * vw;
+      // Sized to the phone too, so a smaller hero phone gets a matching robot.
+      const wPx = Math.min(cur.w * vw, ph.h * 0.36);
       const left = ph.cx - ph.w / 2 - wPx * 0.93;
       const bottom = window.innerHeight - (ph.cy + ph.h * 0.4);
       const intro = director.intro.v;

@@ -25,11 +25,33 @@ export const POSES = {
   aside: { x: -0.85, y: 0, rx: 0.02, ry: 0.5, rz: 0, s: 0.9, hidden: true },
 } satisfies Record<string, Pose>;
 
-/** The hero pose sized so the phone is ~19% of the viewport width (reference). */
-export function heroPose(vw: number, vh: number): Pose {
+/** The hero's free vertical band (CSS px from the top of the page): below the navbar, above the feature strip. */
+export type HeroBand = { top: number; bottom: number };
+/** Share of the band the phone may fill, leaving room for its tilt and float. */
+const HERO_FILL = 0.88;
+
+/**
+ * The hero pose and the phone's on-screen box. The phone is ~19% of the
+ * viewport wide (reference), but never taller than the hero band allows, and
+ * is centred in that band. Phone size on screen: 0.7006·s·vh tall,
+ * 0.3401·s·vh·cos(ry) wide (same geometry as featPose).
+ */
+export function heroLayout(vw: number, vh: number, band?: HeroBand) {
   const viewH = 2 * Math.tan((15 * Math.PI) / 180) * 4.4;
-  const s = (0.19 * vw * viewH) / (0.8 * vh * Math.cos(POSES.hero.ry));
-  return { ...POSES.hero, s: Math.min(1.1, Math.max(0.82, s)) };
+  let s = Math.min(1.1, Math.max(0.82, (0.19 * vw * viewH) / (0.8 * vh * Math.cos(POSES.hero.ry))));
+  let cy = vh * (0.5 - POSES.hero.y);
+  if (band && band.bottom > band.top) {
+    s = Math.max(0.55, Math.min(s, (HERO_FILL * (band.bottom - band.top)) / (0.7006 * vh)));
+    cy = (band.top + band.bottom) / 2;
+  }
+  const pose: Pose = { ...POSES.hero, s, y: 0.5 - cy / vh };
+  const h = 0.7006 * s * vh;
+  const w = 0.3401 * s * vh * Math.cos(POSES.hero.ry);
+  return { pose, box: { cx: vw * (0.5 + POSES.hero.x), cy, w, h } };
+}
+
+export function heroPose(vw: number, vh: number, band?: HeroBand): Pose {
+  return heroLayout(vw, vh, band).pose;
 }
 
 const lerpPose = (a: Pose, b: Pose, t: number): Pose => ({

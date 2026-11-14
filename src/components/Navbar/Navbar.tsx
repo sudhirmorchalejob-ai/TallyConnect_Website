@@ -23,14 +23,45 @@ function PlayBadge({ big = false }: { big?: boolean }) {
 
 // "Live Demo" opens the demo video popup; the others scroll to their section.
 const LINKS = [
+  ['top', 'Home'],
   ['highlights', 'Key Features'],
+  ['how-it-works', 'How it Works'],
   ['live-demo', 'Live Demo'],
   ['faq', 'FAQ'],
 ] as const;
+type LinkId = (typeof LINKS)[number][0];
+
+/** The navbar link for the section currently under the navbar (scroll spy). */
+function useActiveLink(): LinkId {
+  const [active, setActive] = useState<LinkId>('top');
+  useEffect(() => {
+    // Cheap (five boxes), so it runs straight from the scroll event.
+    const on = () => {
+      const line = window.innerHeight * 0.35;
+      let cur: LinkId = 'top';
+      for (const [id] of LINKS) {
+        const el = id === 'top' ? null : document.getElementById(id);
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) cur = id;
+      }
+      setActive(cur);
+    };
+    on();
+    window.addEventListener('scroll', on, { passive: true });
+    window.addEventListener('resize', on);
+    return () => {
+      window.removeEventListener('scroll', on);
+      window.removeEventListener('resize', on);
+    };
+  }, []);
+  return active;
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const active = useActiveLink();
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
     on();
@@ -53,30 +84,41 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <nav
         aria-label="Main"
-        className={`mx-auto flex h-16 max-w-site items-center lg:h-[72px] lg:max-w-[88vw] gap-3 rounded-[22px] px-3 transition-all duration-300 sm:px-4 ${
+        className={`mx-auto flex h-16 max-w-site items-center lg:h-[72px] lg:max-w-[94vw] gap-3 rounded-[22px] px-3 transition-all duration-300 sm:px-4 ${
           scrolled || open ? 'border border-white bg-white/85 shadow-[0_12px_30px_-18px_rgba(27,45,91,.35)] backdrop-blur-xl' : 'border border-transparent'
         }`}
       >
         <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex flex-none items-center gap-2.5" aria-label="Tally Connect home">
           <Logo className="h-[28px] sm:h-[34px]" />
         </a>
-        <ul className="ml-auto hidden items-center gap-2 lg:flex xl:gap-4">
+        <ul className="ml-auto mr-auto hidden items-center gap-0.5 lg:flex xl:gap-2">
           {LINKS.map(([id, t]) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 onClick={(e) => (e.preventDefault(), go(id))}
-                className={`group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[16px] font-semibold text-navy-3 transition-colors hover:bg-acc/[0.06] hover:text-acc`}
+                aria-current={active === id ? 'true' : undefined}
+                className={`group relative inline-flex items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-semibold transition-colors hover:text-acc xl:px-4 xl:text-[16.5px] ${
+                  active === id ? 'text-acc' : 'text-navy-3'
+                }`}
               >
-                {id === 'live-demo' && <PlayBadge />}
+                {id === 'live-demo' && <PlayBadge big />}
                 {t}
+                {/* active underline (design) */}
+                <span
+                  className={`absolute inset-x-3 -bottom-0.5 h-[3px] rounded-full bg-acc transition-opacity duration-200 xl:inset-x-4 ${active === id ? 'opacity-100' : 'opacity-0'}`}
+                  aria-hidden="true"
+                />
               </a>
             </li>
           ))}
         </ul>
-        {/* Full button from 640px; a compact one on phones. */}
-        <span className="ml-auto hidden sm:block lg:ml-3 xl:ml-5">
+        {/* Full button on tablets and wide screens; compact on phones and next to the links on small laptops. */}
+        <span className="ml-auto hidden sm:block lg:ml-0 lg:hidden xl:block">
           <FreeAccessButton onClick={() => go('free-access')} />
+        </span>
+        <span className="hidden lg:block xl:hidden">
+          <FreeAccessButton compact onClick={() => go('free-access')} />
         </span>
         <span className="ml-auto sm:hidden">
           <FreeAccessButton compact onClick={() => go('free-access')} />

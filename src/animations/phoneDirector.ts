@@ -16,7 +16,7 @@ export type Key = { at: number; pose: Pose; shot?: Shot };
 export const POSES = {
   // Hero framing from the landing reference: turned so the left edge comes
   // forward, top tipped back and leaning right. Sized per viewport (heroPose).
-  hero: { x: 0.19, y: -0.065, rx: -0.1, ry: 0.38, rz: -0.06, s: 1.05 },
+  hero: { x: 0.14, y: -0.065, rx: -0.1, ry: 0.38, rz: -0.06, s: 1.05 },
   about: { x: -0.22, y: 0, rx: 0.03, ry: 0.4, rz: -0.025, s: 0.94 },
   dash: { x: 0, y: -0.005, rx: 0, ry: 0, rz: 0, s: 1.14 },
   feat: { x: -0.235, y: -0.01, rx: 0.02, ry: 0.22, rz: -0.01, s: 1 },
@@ -31,14 +31,14 @@ export type HeroBand = { top: number; bottom: number };
 const HERO_FILL = 0.88;
 
 /**
- * The hero pose and the phone's on-screen box. The phone is ~19% of the
- * viewport wide (reference), but never taller than the hero band allows, and
- * is centred in that band. Phone size on screen: 0.7006·s·vh tall,
- * 0.3401·s·vh·cos(ry) wide (same geometry as featPose).
+ * The hero pose and the phone's on-screen box. The phone is up to ~24% of
+ * the viewport wide (reference design), but never taller than the hero band
+ * allows, and is centred in that band. Phone size on screen: 0.7006·s·vh
+ * tall, 0.3401·s·vh·cos(ry) wide (same geometry as featPose).
  */
 export function heroLayout(vw: number, vh: number, band?: HeroBand) {
   const viewH = 2 * Math.tan((15 * Math.PI) / 180) * 4.4;
-  let s = Math.min(1.1, Math.max(0.82, (0.19 * vw * viewH) / (0.8 * vh * Math.cos(POSES.hero.ry))));
+  let s = Math.min(1.1, Math.max(0.82, (0.24 * vw * viewH) / (0.8 * vh * Math.cos(POSES.hero.ry))));
   let cy = vh * (0.5 - POSES.hero.y);
   if (band && band.bottom > band.top) {
     s = Math.max(0.55, Math.min(s, (HERO_FILL * (band.bottom - band.top)) / (0.7006 * vh)));

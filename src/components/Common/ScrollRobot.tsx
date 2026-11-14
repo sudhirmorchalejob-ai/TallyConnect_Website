@@ -26,7 +26,7 @@ export function ScrollRobot() {
       // feet level with the lower part of the phone. Follows it every frame.
       const vw = document.documentElement.clientWidth / 100;
       // Sized to the phone too, so a smaller hero phone gets a matching robot.
-      const wPx = Math.min(cur.w * vw, ph.h * 0.36);
+      const wPx = Math.min(cur.w * vw, ph.h * 0.33);
       const left = ph.cx - ph.w / 2 - wPx * 0.93;
       const bottom = window.innerHeight - (ph.cy + ph.h * 0.4);
       const intro = director.intro.v;
@@ -48,15 +48,15 @@ export function ScrollRobot() {
       style={{ width: '15.5vw', opacity: 0 }}
       aria-hidden="true"
     >
-      <div ref={bubble} className="absolute -top-[40%] left-[2%] w-[96%]">
+      <div ref={bubble} className="absolute -top-[40%] left-1/2 w-max min-w-[96%] -translate-x-1/2">
         <div className="float-chip relative rounded-[16px] border border-white bg-white/95 px-[1vw] py-[0.8vw] text-center shadow-[0_14px_30px_-14px_rgba(110,21,49,.4)]">
-          <div className="flex items-center justify-center gap-1.5 text-[clamp(14px,1.18vw,20px)] font-extrabold text-acc">
+          <div className="flex items-center justify-center gap-1.5 whitespace-nowrap text-[clamp(13px,1.1vw,20px)] font-extrabold text-acc">
             <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2l1.8 5.4L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.6zM19 14l.9 2.6L22 17.5l-2.1.9L19 21l-.9-2.6-2.1-.9 2.1-.9z" />
             </svg>
             Tally Connect AI
           </div>
-          <div className="mt-0.5 text-[clamp(12px,0.95vw,16px)] font-bold leading-snug text-navy-3">
+          <div className="mt-0.5 whitespace-nowrap text-[clamp(11.5px,0.92vw,16px)] font-bold leading-snug text-navy-3">
             Your Smart
             <br />
             Accounting Expert

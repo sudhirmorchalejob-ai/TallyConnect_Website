@@ -24,7 +24,7 @@ export function FreeAccessButton({ onClick, compact = false }: { onClick: () => 
         onClick();
       }}
       className="group relative block flex-none rounded-[20px] p-[3px] shadow-[0_0_0_1px_rgba(255,255,255,.9),0_0_0_4px_rgba(245,190,212,.45),0_12px_26px_-10px_rgba(140,29,63,.6)] transition-transform duration-300 hover:-translate-y-0.5"
-      aria-label="Limited-Time Free Access: grab your 6-month free access"
+      aria-label="Limited-Time Free Access: get a 6-month free trial"
     >
       <span
         className={`relative flex items-center overflow-hidden rounded-[17px] border border-[#f3b5ca]/70 bg-gradient-to-br from-[#b4305d] via-[#93203f] to-[#6e1531] text-white shadow-[inset_0_1px_0_rgba(255,255,255,.25)] ${
@@ -49,7 +49,7 @@ export function FreeAccessButton({ onClick, compact = false }: { onClick: () => 
           <span className={`block whitespace-nowrap font-extrabold ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
             {compact ? 'Free Access' : 'Limited-Time Free Access'}
           </span>
-          {!compact && <span className="block whitespace-nowrap text-[12px] font-semibold text-white/85">Grab Your 6-Month Free Access</span>}
+          {!compact && <span className="block whitespace-nowrap text-[12px] font-semibold text-white/85">Get 6-Month Free Trial</span>}
         </span>
         <svg
           viewBox="0 0 24 24"

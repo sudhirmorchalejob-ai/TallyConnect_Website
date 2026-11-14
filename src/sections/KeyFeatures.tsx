@@ -1,6 +1,6 @@
 // Key selling points, given strong visual emphasis: a dark spotlight for
 // Tally Connect AI, then a bento grid of the other headline features.
-import { useRef, type CSSProperties, type ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { SiteIcon } from '../components/Common/SiteIcon';
 import { KEY_FEATURES, KEY_REPORTS, LANGUAGE_NAMES, type KeyFeature } from '../data/content';
 import { useReveal } from '../hooks/useSmoothScroll';
@@ -213,35 +213,5 @@ export function KeyFeatures() {
         </div>
       </div>
     </section>
-  );
-}
-
-/** Scrolling ribbon of the headline features, under the hero. */
-export function KeyFeatureRibbon({ className = '', style }: { className?: string; style?: CSSProperties }) {
-  const items = [{ ic: 'spark' as const, short: 'Tally Connect AI' }, ...KEY_FEATURES];
-  const row = (hidden: boolean) => (
-    <ul className="flex flex-none items-center gap-3 pr-3" aria-hidden={hidden || undefined}>
-      {items.map((f) => (
-        <li
-          key={f.short}
-          className={`flex flex-none items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[14px] font-extrabold shadow-[0_8px_20px_-14px_rgba(110,21,49,.45)] ${
-            f.short === 'Tally Connect AI'
-              ? 'border-transparent bg-gradient-to-r from-[#1b2d5b] to-[#6e1531] text-white'
-              : 'border-white bg-white/90 text-navy-3'
-          }`}
-        >
-          <SiteIcon n={f.ic} size={17} stroke={2.1} className={f.short === 'Tally Connect AI' ? 'text-[#ffb3cc]' : 'text-acc'} />
-          {f.short}
-        </li>
-      ))}
-    </ul>
-  );
-  return (
-    <div className={`ribbon-mask overflow-hidden ${className}`} style={style}>
-      <div className="ribbon-track flex w-max">
-        {row(false)}
-        {row(true)}
-      </div>
-    </div>
   );
 }

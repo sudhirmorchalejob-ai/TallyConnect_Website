@@ -121,7 +121,7 @@ export function PromoPopup() {
             aria-modal="true"
             aria-labelledby="promo-title"
             aria-describedby="promo-desc"
-            className="relative w-full max-w-[min(1080px,calc((100svh-48px)*1.914))]"
+            className="relative w-full max-w-[min(1080px,calc((100svh-48px)*1.897))]"
             initial={{ opacity: 0, scale: 0.94, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}

@@ -17,8 +17,8 @@ export const PROMO = {
 export const PROMO_BANNER = {
   src: '/images/promo/tc_free_access_banner.webp',
   srcSmall: '/images/promo/tc_free_access_banner_960.webp',
-  width: 1623,
-  height: 848,
-  close: { left: 93.4, top: 1.9, width: 5.3, height: 10.2 },
-  cta: { left: 4.0, top: 81.4, width: 36.6, height: 16.6 },
+  width: 1721,
+  height: 907,
+  close: { left: 94.5, top: 1.5, width: 4.9, height: 9.5 },
+  cta: { left: 3.8, top: 81.8, width: 37, height: 14.3 },
 };

@@ -33,7 +33,7 @@ const LINKS = {
 const BENEFITS = [
   { t: 'Talk to Our Team', d: 'Discuss your requirements and get personalized assistance.', icon: 'handshake' },
   { t: 'Quick Setup', d: 'We help you with the implementation and access setup.', icon: 'gear' },
-  { t: 'Use for 6 Months', d: 'Enjoy Tally Connect free for 6 months.', icon: 'calendarCheck' },
+  { t: 'Use for 6 Months', d: 'Enjoy Tally Connect free for 6 months.', icon: 'infinity' },
 ] as const;
 
 /* ---------- icons ---------- */
@@ -62,10 +62,9 @@ const Handshake = (p: { size?: number }) => (
     <path d="m18.1 11.6 3.4-3.6" />
   </Svg>
 );
-const CalendarCheck = (p: { size?: number }) => (
-  <Svg {...p} stroke={1.6}>
-    <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
-    <path d="M3.5 9.5h17M8 3v4M16 3v4M9 14.5l2 2 4-4" />
+const InfinityIcon = (p: { size?: number }) => (
+  <Svg {...p} stroke={2}>
+    <path d="M12 12c-2-2.7-3.6-4-5.5-4a4 4 0 0 0 0 8c1.9 0 3.5-1.3 5.5-4Zm0 0c2 2.7 3.6 4 5.5 4a4 4 0 0 0 0-8c-1.9 0-3.5 1.3-5.5 4Z" />
   </Svg>
 );
 const WhatsAppLogo = ({ size = 30 }: { size?: number }) => (
@@ -91,37 +90,6 @@ function Sparks({ className = '' }: { className?: string }) {
 }
 
 /* ---------- pieces ---------- */
-
-/** Calendar-style card with the offer length (6 months). */
-function ValidityCard({ className = '' }: { className?: string }) {
-  return (
-    <div className={`relative pt-5 ${className}`}>
-      {/* binder rings */}
-      {['left-[24%]', 'right-[24%]'].map((pos) => (
-        <span
-          key={pos}
-          className={`absolute top-0 ${pos} z-[1] h-12 w-5 rounded-full border-[4px] border-[#e9ad3a] bg-gradient-to-b from-[#fff0c4] to-[#dda233] shadow-[0_4px_8px_rgba(110,21,49,.35)]`}
-          aria-hidden="true"
-        />
-      ))}
-      <Sparks className="absolute -right-3 -top-3 w-12" />
-      <div className="overflow-hidden rounded-[26px] bg-white shadow-[0_28px_50px_-24px_rgba(110,21,49,.6),0_0_0_6px_rgba(255,255,255,.75)]">
-        <p className="bg-gradient-to-b from-[#a8264f] to-[#7a1534] px-4 pb-4 pt-9 text-center text-[clamp(18px,1.6vw,26px)] font-extrabold text-white">Free Access</p>
-        <div className="px-5 pb-6 pt-5 text-center">
-          <p className="flex items-center justify-center gap-2.5 text-[clamp(15px,1.3vw,20px)] font-extrabold leading-tight text-[#6e1531]">
-            <SiteIcon n="calendar" size={24} className="text-acc" />
-            Use it free for
-          </p>
-          <p className="mt-1 text-[clamp(64px,6vw,96px)] font-black leading-none text-acc">6</p>
-          <p className="text-[clamp(22px,2vw,32px)] font-extrabold leading-tight text-[#6e1531]">Months</p>
-          <p className="mx-auto mt-5 w-fit rounded-full bg-gradient-to-b from-[#ffd95c] to-[#f6bb22] px-6 py-2 text-[clamp(14px,1.15vw,19px)] font-extrabold text-navy shadow-[0_10px_18px_-10px_rgba(196,127,18,.9)]">
-            (6 Months Only)
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /**
  * The phone's four outer corners in the artwork (fractions of the image:
@@ -215,9 +183,9 @@ function SharpPhone({ w }: { w: number }) {
 
 function ContactCard() {
   const tile =
-    'group flex min-w-0 items-center gap-3 rounded-[18px] border border-[#f1e6ee] bg-white px-4 py-3 text-left shadow-[0_14px_26px_-18px_rgba(27,45,91,.45)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_34px_-18px_rgba(140,29,63,.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acc';
+    'group flex min-w-0 items-center gap-3 rounded-[18px] border border-[#f1e6ee] bg-white px-4 py-3 xl:gap-2.5 xl:px-3.5 text-left shadow-[0_14px_26px_-18px_rgba(27,45,91,.45)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_34px_-18px_rgba(140,29,63,.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acc';
   return (
-    <div className="reveal rounded-[30px] border border-white bg-white/80 p-5 shadow-[0_24px_50px_-30px_rgba(27,45,91,.4)] backdrop-blur-md sm:p-7">
+    <div className="reveal rounded-[30px] border border-white bg-white/80 p-5 shadow-[0_24px_50px_-30px_rgba(27,45,91,.4)] backdrop-blur-md sm:p-7 lg:p-[clamp(18px,3vh,30px)]">
       <div className="flex items-start gap-4">
         <span className="mt-0.5 text-acc">
           <Headset size={46} />
@@ -229,11 +197,11 @@ function ContactCard() {
           </p>
         </div>
       </div>
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 min-[1680px]:grid-cols-[1.45fr_1fr_1.05fr] min-[1680px]:gap-4">
+      <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-[1.3fr_1fr_1.12fr]">
         <a
           href={LINKS.email}
           aria-label={`Email Us at ${SITE.email} about the 6-month free access`}
-          className="group flex min-w-0 flex-col items-center justify-center rounded-[18px] bg-gradient-to-b from-[#a8264f] to-[#7a1534] px-4 py-3 text-center text-white shadow-[0_16px_30px_-14px_rgba(110,21,49,.8)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_36px_-14px_rgba(110,21,49,.9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acc sm:col-span-2 min-[1680px]:col-span-1"
+          className="group flex min-w-0 flex-col items-center justify-center rounded-[18px] bg-gradient-to-b from-[#a8264f] to-[#7a1534] px-4 py-3 text-center text-white shadow-[0_16px_30px_-14px_rgba(110,21,49,.8)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_36px_-14px_rgba(110,21,49,.9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acc sm:col-span-2 xl:col-span-1"
         >
           <span className="flex items-center gap-2.5 text-[19px] font-extrabold">
             <SiteIcon n="mail" size={23} className="transition-transform duration-300 group-hover:-rotate-6" /> Email Us
@@ -272,21 +240,21 @@ export function FreeAccess() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} id="free-access" className="relative overflow-hidden pb-14 pt-16 sm:pt-20">
+    <section ref={ref} id="free-access" className="relative overflow-hidden pb-14 pt-16 sm:pt-20 lg:pb-[clamp(24px,4vh,56px)] lg:pt-[clamp(24px,4vh,56px)]">
       {/* white / lavender / pink backdrop with the brand waves in the lower-right corner */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(50%_60%_at_10%_20%,#fdeef5_0%,transparent_70%),radial-gradient(45%_55%_at_80%_25%,#f6ecfb_0%,transparent_70%),linear-gradient(180deg,#fdf8fc_0%,#f9eff7_100%)]" />
         <Waves idp="fa" className="absolute bottom-0 right-0 h-[24%] w-[70%]" />
       </div>
 
-      <div className="wrap xl:max-w-[1680px]">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.95fr] xl:grid-cols-[1.25fr_1fr_0.53fr] xl:gap-4">
+      <div className="wrap xl:max-w-[1320px]">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.08fr_1fr] xl:gap-12">
           {/* text + contact */}
           <div className="min-w-0">
-            <p className="reveal inline-flex items-center gap-2.5 rounded-full bg-[#fbe4ed] px-4 py-2 text-[14px] font-extrabold uppercase tracking-[0.03em] text-acc sm:text-[17px]">
+            <p className="reveal inline-flex items-center gap-2.5 rounded-full bg-[#fbe4ed] px-4 py-2 text-[14px] font-extrabold uppercase tracking-[0.03em] text-acc sm:text-[16px]">
               <SiteIcon n="gift" size={20} stroke={2.1} /> Limited-Time Offer
             </p>
-            <h2 className="reveal mt-5 text-[42px] font-extrabold leading-[1.12] tracking-[-0.03em] text-navy sm:text-[58px] xl:text-[clamp(56px,4.1vw,68px)]">
+            <h2 className="reveal mt-5 text-[40px] font-extrabold leading-[1.12] tracking-[-0.03em] text-navy sm:text-[56px] lg:mt-[clamp(12px,2.2vh,22px)] lg:text-[clamp(42px,min(4vw,6.6vh),66px)]">
               Get <span className="text-acc">6-Month</span>
               <br />
               <span className="relative mr-3 inline-block rounded-[18px] bg-gradient-to-r from-[#6e1531] via-[#8c1d3f] to-[#a8264f] px-4 pb-1.5 pt-0.5 italic text-white shadow-[-6px_8px_0_-1px_#f5b52c,0_16px_28px_-12px_rgba(110,21,49,.7)]">
@@ -297,31 +265,26 @@ export function FreeAccess() {
               <br />
               Tally Connect
             </h2>
-            <p className="reveal mt-5 text-[17px] leading-[1.55] text-ink sm:text-[20px]">
+            <p className="reveal mt-5 text-[17px] leading-[1.55] text-ink sm:text-[19px] lg:mt-[clamp(12px,2.2vh,22px)] lg:text-[clamp(16px,min(1.35vw,2.5vh),20px)]">
               Interested in using Tally Connect?
               <br />
               Get in touch with our team to activate your 6-month free access.
             </p>
-            <div className="mt-6">
+            <div className="mt-7 lg:mt-[clamp(16px,2.8vh,30px)]">
               <ContactCard />
             </div>
           </div>
 
-          {/* artwork + validity: side by side below xl, separate columns from xl */}
-          <div className="reveal grid grid-cols-1 items-center gap-8 sm:grid-cols-[1.4fr_1fr] lg:grid-cols-1 xl:contents">
-            <ValidityCard className="order-1 mx-auto w-full max-w-[300px] sm:order-2 lg:hidden xl:order-3 xl:block xl:max-w-none" />
-            <OfferArt className="order-2 mx-auto max-w-[520px] sm:order-1 xl:order-2 xl:max-w-none" />
-          </div>
+          {/* gift box + phone artwork (the calendar panel is gone, so the art gets the whole column) */}
+          <OfferArt className="reveal mx-auto max-w-[440px] sm:max-w-[500px] lg:max-w-[min(560px,calc((100svh-210px)*0.9))]" />
         </div>
-        {/* lg only: validity under the art column is hidden, so show it under the text */}
-        <ValidityCard className="reveal mx-auto mt-8 hidden w-[320px] lg:block xl:hidden" />
 
         {/* benefits */}
-        <div className="reveal mt-10 grid gap-6 border-t border-navy/10 pt-7 sm:grid-cols-3 sm:gap-0">
+        <div className="reveal mt-12 grid gap-6 sm:grid-cols-3 sm:gap-0 lg:mt-[clamp(20px,4vh,48px)]">
           {BENEFITS.map((b, i) => (
             <div key={b.t} className={`flex items-start justify-center gap-4 sm:px-6 ${i ? 'sm:border-l sm:border-navy/15' : ''}`}>
               <span className="mt-0.5 text-acc">
-                {b.icon === 'handshake' ? <Handshake size={44} /> : b.icon === 'gear' ? <SiteIcon n="gear" size={40} stroke={1.6} /> : <CalendarCheck size={42} />}
+                {b.icon === 'handshake' ? <Handshake size={44} /> : b.icon === 'gear' ? <SiteIcon n="gear" size={40} stroke={1.6} /> : <InfinityIcon size={44} />}
               </span>
               <div>
                 <h3 className="text-[18px] font-extrabold text-navy">{b.t}</h3>

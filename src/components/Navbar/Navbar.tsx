@@ -31,6 +31,9 @@ const LINKS = [
 ] as const;
 type LinkId = (typeof LINKS)[number][0];
 
+/** The web dashboard (external page, same tab). */
+const DASHBOARD_URL = 'https://dashboard.tally-connect.com/';
+
 /** The navbar link for the section currently under the navbar (scroll spy). */
 function useActiveLink(): LinkId {
   const [active, setActive] = useState<LinkId>('top');
@@ -112,12 +115,20 @@ export function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={DASHBOARD_URL}
+              className="group relative inline-flex items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-semibold text-navy-3 transition-colors hover:text-acc xl:px-4 xl:text-[16.5px]"
+            >
+              Dashboard
+            </a>
+          </li>
         </ul>
-        {/* Full button on tablets and wide screens; compact on phones and next to the links on small laptops. */}
-        <span className="ml-auto hidden sm:block lg:ml-0 lg:hidden xl:block">
+        {/* Full button on tablets and wide screens (1440px+); compact on phones and next to the six links on laptops. */}
+        <span className="ml-auto hidden sm:block lg:ml-0 lg:hidden min-[1440px]:block">
           <FreeAccessButton onClick={() => go('free-access')} />
         </span>
-        <span className="hidden lg:block xl:hidden">
+        <span className="hidden lg:block min-[1440px]:hidden">
           <FreeAccessButton compact onClick={() => go('free-access')} />
         </span>
         <span className="ml-auto sm:hidden">
@@ -156,6 +167,13 @@ export function Navbar() {
                 <SiteIcon n="chevR" size={18} className="text-ink-3" />
               </a>
             ))}
+            <a
+              href={DASHBOARD_URL}
+              className="group flex items-center justify-between rounded-2xl px-4 py-3.5 text-[16.5px] font-bold text-ink transition-colors hover:bg-white/70 hover:text-acc"
+            >
+              Dashboard
+              <SiteIcon n="chevR" size={18} className="text-ink-3" />
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,7 +4,9 @@ import { director, heroLayout } from '../animations/phoneDirector';
 import { SiteIcon } from '../components/Common/SiteIcon';
 import { CssPhone } from '../components/Smartphone/CssPhone';
 import { SITE } from '../config/site';
+import { useMediaQuery } from '../hooks/useMedia';
 import { scrollToId } from '../hooks/useSmoothScroll';
+import { HeroMobile } from './HeroMobile';
 import type { IconName } from '../demo/icons';
 
 // Hero copy and cards, from the approved homepage design.
@@ -176,6 +178,8 @@ export function Hero({ full }: { full: boolean }) {
   const root = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const cards = useCardLayout(full, stage);
+  // Phones (under 768px) get their own design; tablets and desktops are unchanged.
+  const phone = useMediaQuery('(max-width: 767px)');
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
@@ -263,6 +267,14 @@ export function Hero({ full }: { full: boolean }) {
       ))}
     </ul>
   );
+
+  if (!full && phone) {
+    return (
+      <section ref={root} id="top" className="relative overflow-hidden pb-10 pt-[92px]">
+        <HeroMobile />
+      </section>
+    );
+  }
 
   if (!full) {
     // Tablets, phones, no WebGL: the same design stacked, with the CSS phone

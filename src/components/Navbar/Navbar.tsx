@@ -87,12 +87,12 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <nav
         aria-label="Main"
-        className={`mx-auto flex h-16 max-w-site items-center lg:h-[72px] lg:max-w-[94vw] gap-3 rounded-[22px] px-3 transition-all duration-300 sm:px-4 ${
+        className={`mx-auto flex h-16 max-w-site items-center lg:h-[72px] lg:max-w-[94vw] gap-3 max-[359px]:gap-1.5 rounded-[22px] px-3 max-[359px]:px-2 transition-all duration-300 sm:px-4 ${
           scrolled || open ? 'border border-white bg-white/85 shadow-[0_12px_30px_-18px_rgba(27,45,91,.35)] backdrop-blur-xl' : 'border border-transparent'
         }`}
       >
         <a href="#top" onClick={(e) => (e.preventDefault(), go('top'))} className="flex flex-none items-center gap-2.5" aria-label="Tally Connect home">
-          <Logo className="h-[28px] sm:h-[34px]" />
+          <Logo className="h-[24px] min-[360px]:h-[28px] sm:h-[34px]" />
         </a>
         <ul className="ml-auto mr-auto hidden items-center gap-0.5 lg:flex xl:gap-2">
           {LINKS.map(([id, t]) => (

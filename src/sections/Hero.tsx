@@ -211,6 +211,8 @@ export function Hero({ full }: { full: boolean }) {
       </a>
       <a
         href={apk || '#free-access'}
+        rel="noreferrer"
+        referrerPolicy="no-referrer"
         onClick={(e) => {
           if (!apk) {
             e.preventDefault();

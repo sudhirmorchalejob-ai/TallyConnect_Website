@@ -167,6 +167,8 @@ export function HeroMobile() {
       <div className="hero-cta relative mx-3 mt-4 grid grid-cols-2 gap-3">
         <a
           href={apk || '#free-access'}
+          rel="noreferrer"
+          referrerPolicy="no-referrer"
           onClick={(e) => {
             if (!apk) {
               e.preventDefault();

@@ -31,8 +31,8 @@ Copy `.env.example` to `.env` and fill in as needed:
 
 | Variable | Purpose |
 |---|---|
-| `VITE_ANDROID_APK_URL` | Direct APK download link. If empty, the button opens an email request instead. |
-| `VITE_AGENT_URL` | Windows Sync Agent installer link. If empty, that button is hidden. |
+| `VITE_ANDROID_APK_URL` | Direct APK download link. If empty, the APK on Google Drive is used (see `src/config/site.ts`). |
+| `VITE_AGENT_URL` | Windows Connector installer link. If empty, the installer on Google Drive is used (see `src/config/site.ts`). |
 | `VITE_MOBILE_APP_DEMO_URL` | Android app demo video (Live Demo section). |
 | `VITE_WEB_DASHBOARD_DEMO_URL` | Web dashboard demo video (Live Demo section). |
 

@@ -15,6 +15,7 @@ import { Benefits } from './sections/Benefits';
 import { DashboardShowcase } from './sections/DashboardShowcase';
 import { FAQ } from './sections/FAQ';
 import { FreeAccess } from './sections/FreeAccess';
+import { GetStarted } from './sections/GetStarted';
 import { Features } from './sections/Features';
 import { Hero } from './sections/Hero';
 import { HowItWorks } from './sections/HowItWorks';
@@ -140,6 +141,7 @@ export default function App() {
         <Security />
         <FAQ />
         <FreeAccess />
+        <GetStarted />
       </main>
       <Footer />
       <PromoPopup />
